@@ -1,7 +1,7 @@
 image: registry.corp.hetao101.com/ops/htci:docker
 
 stages:
-  - build:docker
+  - build
   - deploy
 
 before_script:
@@ -9,9 +9,10 @@ before_script:
   - IMAGE_OF_BRANCH=${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
 
 Build Docker Image:
-  stage: build:docker
+  stage: build
+  image: registry.corp.hetao101.com/ops/htci:docker
   script:
-    - docker build --build-arg NPM_TOKEN=${NPM_TOKEN} -t ${IMAGE_OF_COMMIT} -t ${IMAGE_OF_BRANCH} .
+    - docker build --build-arg NPM_TOKEN=${NPM_TOKEN}  -t ${IMAGE_OF_COMMIT} -t ${IMAGE_OF_BRANCH} .
     - docker push ${IMAGE_OF_COMMIT}
     - docker push ${IMAGE_OF_BRANCH}
 
@@ -32,17 +33,31 @@ Update testing env:
   variables:
     KUBE_CLUSTER: bjo
     NAMESPACE: testing
-    WORKLOAD: deploy/fe-landingpage
-    CONTAINER: fe-landingpage
+    WORKLOAD: deploy/fe-staff
+    CONTAINER: fe-staff
 
-# Update production env:
-#   <<: *deploy_base
-#   only:
-#     - /^release-.*$/
-#   before_script:
-#     - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
-#   variables:
-#     KUBE_CLUSTER: alibj
-#     NAMESPACE: production
-#     WORKLOAD: deploy/mobile-landingpage
-#     CONTAINER: mobile-landingpage
+Update production env:
+  <<: *deploy_base
+  only:
+    - /^release-.*$/
+  before_script:
+    - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
+  when: manual
+  variables:
+    KUBE_CLUSTER: alibj
+    NAMESPACE: production
+    WORKLOAD: deploy/fe-staff
+    CONTAINER: fe-staff
+    
+Update market env:
+  <<: *deploy_base
+  only:
+    - /^release-.*$/
+  before_script:
+    - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
+  when: manual
+  variables:
+    KUBE_CLUSTER: alibj
+    NAMESPACE: market
+    WORKLOAD: deploy/fe-staff
+    CONTAINER: fe-staff    
