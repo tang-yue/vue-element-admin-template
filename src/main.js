@@ -20,7 +20,7 @@ new Vue({
     checkLogin() {
         if(Cookie('staffUserId')) {
         } else {
-            this.$router.push('/login');
+            this.$router.push('/fe-staff/login');
         }
     }
   },
