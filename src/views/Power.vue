@@ -147,7 +147,7 @@ export default {
           this.total = res.data.total;
           this.loading = false;
         } else if(res.errCode === 10110002) {
-          this.$router.push(`/login`);
+          this.$router.push(`/fe-staff/login`);
         }
       });
       allRole({
@@ -160,7 +160,7 @@ export default {
           })
           this.allRoleList = result;
         } else if(res.errCode === 10110002) {
-          this.$router.push(`/login`);
+          this.$router.push(`/fe-staff/login`);
         }
       })
     },
@@ -173,7 +173,7 @@ export default {
           this.curItem = res.data;
           this.roleList = res.data.roleName.split(",");
         } else if(res.errCode === 10110002) {
-          this.$router.push(`/login`);
+          this.$router.push(`/fe-staff/login`);
         }
       })
     },
@@ -195,7 +195,7 @@ export default {
           if(res.errCode === 0) {
             this.$message({message: "更新账号成功", duration: 3000});
           } else if(res.errCode === 10110002) {
-            this.$router.push(`/login`);
+            this.$router.push(`/fe-staff/login`);
           }
         })
       } else {
@@ -206,7 +206,7 @@ export default {
           if(res.errCode === 0) {
             this.$message({message: "创建账号成功", duration: 3000});
           } else if(res.errCode === 10110002) {
-            this.$router.push(`/login`);
+            this.$router.push(`/fe-staff/login`);
           }
         })
       }
@@ -226,7 +226,7 @@ export default {
           this.$message({message: "删除账号成功", duration: 3000});
           this.getListInfo({});
         } else if(res.errCode === 10110002) {
-          this.$router.push(`/login`);
+          this.$router.push(`/fe-staff/login`);
         }
       })
     },

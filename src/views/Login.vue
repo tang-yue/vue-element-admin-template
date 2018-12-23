@@ -2,6 +2,7 @@
   <div class="login">
     <div
       class="formCard"
+      v-if="login"
       >
       <h3>用户后台登录</h3>
       <p>
@@ -44,7 +45,8 @@
         username: '',
         password: '',
         usernameWarning: false,
-        passwordWarning: false
+        passwordWarning: false,
+        login: true
       }
     },
     methods: {
@@ -69,9 +71,9 @@
               Cookie.set('staffUserId', res.data.user.id);
               Cookie.set('staffId', res.data.user.staffId);
               Cookie.set('staffNickname', res.data.user.username);
-              this.$router.push(`/power`);
+              this.$router.push(`/fe-staff/power`);
             } else if(res.errCode === 10110002) {
-              this.$router.push(`/login`);
+              this.$router.push(`/fe-staff/login`);
             } else {
               this.$message({message: "对不起，你和用户名和密码输入错误，请重新输入", duration: 3000});
             }
@@ -79,7 +81,7 @@
         }
       }, 
       modifyPassword() {
-        
+
       }
     }
   }

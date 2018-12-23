@@ -7,29 +7,29 @@ export default new Router({
     mode: 'history',
     routes: [
         {
-          path: '/layout',
+          path: '/fe-staff',
           name: 'Layout',
           component: () => import('./views/Layout'),
           children: [
             {
-              path: '/power', 
+              path: '/fe-staff/power', 
               name: 'Power',
               component: () => import('./views/Power') 
             },
             {
-              path: '/control',
+              path: '/fe-staff/control',
               name: 'Control',
               component: () => import('./views/Control')
             },
             {
-              path: '/authority',
+              path: '/fe-staff/authority',
               name: 'Authority',
               component: () => import('./views/Authority')
             },
           ]
         },
         {
-          path: '/login',
+          path: '/fe-staff/login',
           name: 'Login',
           component: () => import('./views/Login')
         }
