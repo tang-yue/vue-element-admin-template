@@ -5,12 +5,12 @@
                 <div
                     :class="{ highlight:changeRed == 1 }"
                     @click="change(1)">
-                    <router-link to="/power">成员管理</router-link>
+                    <router-link to="/fe-staff/power">成员管理</router-link>
                 </div>
                 <div
                     :class="{ highlight:changeRed == 2 }"
                     @click="change(2)">
-                    <router-link to="/control">角色管理</router-link>
+                    <router-link to="/fe-staff/control">角色管理</router-link>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .highlight {
         background-color: #1f2d3d;
     }

@@ -117,7 +117,7 @@ export default {
            this.total = res.data.total;
            this.loading = false;
          } else if(res.errCode === 10110002) {
-            this.$router.push(`/login`);
+            this.$router.push(`/fe-staff/login`);
          }
       })
     },
@@ -140,7 +140,7 @@ export default {
         if(res.errCode === 0) {
           this.$message({message: '删除角色成功', duration: 3000})
         } else if(res.errCode === 10110002 ) {
-          this.$router.push(`/login`);
+          this.$router.push(`/fe-staff/login`);
         }
       })
       this.getListInfo({});
@@ -153,7 +153,7 @@ export default {
         if(res.errCode === 0) {
           this.$message({message: "添加角色成功", duration: 3000});
         } else if(res.errCode === 10110002) {
-          this.$router.push(`/login`);
+          this.$router.push(`/fe-staff/login`);
         }
       })
       this.dialogFormVisible = false;
@@ -162,7 +162,7 @@ export default {
       this.dialogFormVisible = false;
     },
     handleEdit(index, row) {
-      this.$router.push(`/authority?id=${row.id}`);
+      this.$router.push(`/fe-staff/authority?id=${row.id}`);
     }
   }
 }

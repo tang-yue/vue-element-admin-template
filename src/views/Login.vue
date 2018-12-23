@@ -33,10 +33,55 @@
       <input class="modifyPassword" type="submit" value="修改密码" @click="modifyPassword">
       </p>
     </div>
+    <div
+      v-else="login"
+      class="formCard"
+    >
+      <h3>修改密码</h3>
+      <p>
+        <input
+          id="usernameM"
+          v-model="usernameM"
+          type="text"
+          name="usernameM"
+          placeholder="用户名"
+        >
+      </p>
+      <p class="warning" v-if="usernameWarningM">请输入用户名</p>
+      <p class="space" v-else="usernameWarningM"></p>
+      <p>
+        <input
+          id="oldPassword"
+          v-model="oldPassword"
+          type="text"
+          name="oldPassword"
+          placeholder="原密码"
+        >
+      </p>
+      <p class="warning" v-if="oldPasswordWarning">请输入原密码</p>
+      <p class="space" v-else="oldPasswordWarning"></p>
+      <p>
+        <input
+          id="newPassword"
+          v-model="newPassword"
+          type="text"
+          name="newPassword"
+          placeholder="新密码"
+        >
+      </p>
+       <p class="warning" v-if="newPasswordWarning">请输入新密码</p>
+       <p class="space" v-else="newPasswordWarning"></p>
+      <p>
+        <input class="submitM" type="submit" value="保存" @click="preserve">
+      </p>
+      <p>
+        <input class="modifyPassword backLogin" type="submit" value="返回登录" @click="backLogin">
+      </p>
+    </div>
   </div>
 </template>
 <script>
-  import { login } from '@/services/login.js';
+  import { login, savePassword } from '@/services/login.js';
   import Cookie from 'js-cookie';
   export default {
     name: 'Login',
@@ -44,9 +89,15 @@
       return {
         username: '',
         password: '',
+        usernameM:'',
+        newPassword: '',
+        oldPassword: '',
         usernameWarning: false,
         passwordWarning: false,
-        login: true
+        login: true,
+        usernameWarningM:false,
+        oldPasswordWarning:false,
+        newPasswordWarning:false
       }
     },
     methods: {
@@ -81,16 +132,64 @@
         }
       }, 
       modifyPassword() {
-
+        this.login = false;
+         this.username = '';
+        this.password = '';
+      },
+      preserve() {
+        if(this.usernameM === '') {
+          this.usernameWarningM = true;
+        } else {
+          this.usernameWarningM = false;
+        }
+        if(this.oldPassword === '') {
+          this.oldPasswordWarning = true;
+        } else {
+          this.oldPasswordWarning = false;
+        }
+        if(this.newPassword === '') {
+          this.newPasswordWarning = true;
+        } else {
+          this.newPasswordWarning = false;
+        }
+        if(this.usernameM !== '' && 
+          this.oldPassword !== '' &&
+          this.newPassword !== ''
+          ) {
+          savePassword({
+            type: 'PUT',
+            params: {
+              username:this.username,
+              oldPassword:this.oldPassword,
+              newPassword:this.newPassword
+            }
+          }).then((res) => {
+            if(res.errCode === 0) {
+              this.$message({message: "修改密码成功", duration: 3000});
+              this.login = true;
+            } else if(res.errCode === 10110002) {
+              this.$router.push(`/fe-staff/login`)
+            }
+          })
+        }
+      },
+      backLogin() {
+        this.login = true;
+        this.usernameWarning = false;
+        this.passwordWarning = false;
+        this.usernameM = '';
+        this.oldPassword = '';
+        this.newPassword = '';
       }
     }
   }
 </script>
 
-<style>
+<style scoped>
 html,body,#app {
         height: 100%;
     }
+
 input {
   height: 40px;
   caret-color: #fff;
@@ -103,16 +202,6 @@ input {
   border-radius: 4px;
   outline: none;
   color: #fff;
-}
-.modifyPassword {
-  cursor: pointer;
-  width: 60%;
-  color: #fff;
-  background-color: #409eff;
-  border-color: #409eff;
-  border-radius: 4px;
-  margin: 0 0 0 190px;
-  padding-left: 0;
 }
 .formCard p {
   margin: 0;
@@ -134,6 +223,7 @@ input {
   border-color: #409eff;
   border-radius: 4px;
 }
+
 input::placeholder {
   color: #fff;
 }
@@ -161,4 +251,26 @@ h3 {
   display: block;
   padding: 10px 100px; 
 }
+.submitM {
+  cursor: pointer;
+  padding-left: 0;
+  margin-top: 20px;
+  text-align: center;
+  background-color: #409eff;
+  width: 108%;
+}
+.modifyPassword {
+  cursor: pointer;
+  width: 30%;
+  color: #fff;
+  background-color: #409eff;
+  border-color: #409eff;
+  border-radius: 4px;
+  margin: 0 0 0 310px;
+  padding-left: 0;
+}
+.backLogin {
+  margin-top: 20px;
+}
+
 </style>

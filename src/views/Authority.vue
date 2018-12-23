@@ -120,7 +120,7 @@ export default {
                 }, []);
                 this.checkoutList = checkoutList;
               } else if( res.errCode === 10110002 ) {
-                  this.$router.push(`/login`);
+                  this.$router.push(`/fe-staff/login`);
               } 
             })
         },
@@ -146,7 +146,7 @@ export default {
                 if(res.errCode === 0) {
                     this.$message({message: "保存信息成功", duration: 3000});
                 } else if(res.errCode === 10110002) {
-                    this.$router.push(`/login`);
+                    this.$router.push(`/fe-staff/login`);
                 }
             })
         },      
