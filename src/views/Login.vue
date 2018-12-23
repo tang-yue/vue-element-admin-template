@@ -28,6 +28,9 @@
       <p>
         <input class="submit" type="submit" value="登录" @click="checkForm">
       </p>
+      <p>
+      <input class="modifyPassword" type="submit" value="修改密码" @click="modifyPassword">
+      </p>
     </div>
   </div>
 </template>
@@ -56,22 +59,27 @@
         } else {
           this.passwordWarning = false;
         }
-        login({
-          type: 'post',
-          params: { username: this.username, password: this.password },
-        }).then((res) => {
-          if(res.errCode === 0) {
-            Cookie.set('staffToken', res.data.token);
-            Cookie.set('staffUserId', res.data.user.id);
-            Cookie.set('staffId', res.data.user.staffId);
-            Cookie.set('staffNickname', res.data.user.username);
-            this.$router.push(`/power`);
-          } else if(res.errCode === 10110002) {
-            this.$router.push(`/login`);
-          } else {
-            this.$message({message: "对不起，你和用户名和密码输入错误，请重新输入", duration: 3000});
-          }
-        })
+        if(this.username !== '' && this.password !== '') {
+          login({
+            type: 'post',
+            params: { username: this.username, password: this.password },
+          }).then((res) => {
+            if(res.errCode === 0) {
+              Cookie.set('staffToken', res.data.token);
+              Cookie.set('staffUserId', res.data.user.id);
+              Cookie.set('staffId', res.data.user.staffId);
+              Cookie.set('staffNickname', res.data.user.username);
+              this.$router.push(`/power`);
+            } else if(res.errCode === 10110002) {
+              this.$router.push(`/login`);
+            } else {
+              this.$message({message: "对不起，你和用户名和密码输入错误，请重新输入", duration: 3000});
+            }
+          })
+        }
+      }, 
+      modifyPassword() {
+        
       }
     }
   }
@@ -94,6 +102,16 @@ input {
   outline: none;
   color: #fff;
 }
+.modifyPassword {
+  cursor: pointer;
+  width: 60%;
+  color: #fff;
+  background-color: #409eff;
+  border-color: #409eff;
+  border-radius: 4px;
+  margin: 0 0 0 190px;
+  padding-left: 0;
+}
 .formCard p {
   margin: 0;
 }
@@ -105,6 +123,7 @@ input {
   height: 18px;
 }
 .submit {
+  margin-bottom: 20px;
   cursor: pointer;
   padding-left: 0;
   width: 108%;

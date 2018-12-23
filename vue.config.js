@@ -1,7 +1,7 @@
 module.exports = {
   // 基本路径
-  baseUrl: '/staff',
-  outputDir: 'dist/staff',
+  baseUrl: '/fe-staff',
+  outputDir: 'dist/fe-staff',
   lintOnSave: true,
   pages: {
     index: {
