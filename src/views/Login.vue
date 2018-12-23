@@ -77,6 +77,9 @@
             }
           })
         }
+      }, 
+      modifyPassword() {
+        
       }
     }
   }
