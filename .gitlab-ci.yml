@@ -1,0 +1,48 @@
+image: registry.corp.hetao101.com/ops/htci:docker
+
+stages:
+  - build:docker
+  - deploy
+
+before_script:
+  - IMAGE_OF_COMMIT=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
+  - IMAGE_OF_BRANCH=${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
+
+Build Docker Image:
+  stage: build:docker
+  script:
+    - docker build --build-arg NPM_TOKEN=${NPM_TOKEN} -t ${IMAGE_OF_COMMIT} -t ${IMAGE_OF_BRANCH} .
+    - docker push ${IMAGE_OF_COMMIT}
+    - docker push ${IMAGE_OF_BRANCH}
+
+.deploy_base: &deploy_base
+  stage: deploy
+  image: registry.corp.hetao101.com/ops/htci:kube
+  script:
+    - kubectl -n ${NAMESPACE} set image ${WORKLOAD} ${CONTAINER}=${IMAGE}
+    - kubectl -n ${NAMESPACE} rollout status ${WORKLOAD}
+
+Update testing env:
+  <<: *deploy_base
+  only:
+    - master
+  before_script:
+    - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
+  when: manual
+  variables:
+    KUBE_CLUSTER: bjo
+    NAMESPACE: testing
+    WORKLOAD: deploy/fe-landingpage
+    CONTAINER: fe-landingpage
+
+# Update production env:
+#   <<: *deploy_base
+#   only:
+#     - /^release-.*$/
+#   before_script:
+#     - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
+#   variables:
+#     KUBE_CLUSTER: alibj
+#     NAMESPACE: production
+#     WORKLOAD: deploy/mobile-landingpage
+#     CONTAINER: mobile-landingpage
