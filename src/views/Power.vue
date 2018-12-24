@@ -205,6 +205,8 @@ export default {
         }).then((res) => {
           if(res.errCode === 0) {
             this.$message({message: "创建账号成功", duration: 3000});
+          } else if(res.errCode === 10110011) {
+            this.$message({message: "该账号已经存在，请勿重复添加", duration: 3000});
           } else if(res.errCode === 10110002) {
             this.$router.push(`/fe-staff/login`);
           }

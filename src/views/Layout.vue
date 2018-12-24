@@ -52,7 +52,11 @@ export default {
 
     },
     created() {
-     
+      if (window.location.pathname.split('/')[2] === 'power') {
+        this.changeRed = 1;
+       } else {
+        this.changeRed = 2;
+       }
     },
     methods: {
         change(index) {
@@ -87,12 +91,6 @@ export default {
    fill: currentColor;
    overflow: hidden;
 }
-{/*.nickname {
-    text-align: center;
-    cursor: pointer;
-    width: 70px;
-    float: right;
-}*/}
 .nickname {
     float: right;
 }
