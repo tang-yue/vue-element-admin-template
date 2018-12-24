@@ -15,7 +15,18 @@
             </div>
         </div>
         <div class="main">
-            <div class="header"></div>
+            <div class="header">
+               <el-popover 
+                class="nickname" 
+                placement="bottom"
+                width="200"
+                trigger="click">
+                <p @click="logOut" class="logout">
+                    退出登录
+                </p>
+                <el-button slot="reference">{{nickname ? nickname : ''}}</el-button>
+               </el-popover>
+            </div>
             <div class="body">
                 <router-view></router-view>
             </div>
@@ -26,14 +37,15 @@
 <script>
 import Cookie from "js-cookie";
 export default {
-    name: "Power",
+    name: 'Power',
     data() {
         return {
             list: [
-                {"link": '/control', "name": '成员管理'},
-                {"link": '/power', "name": "角色管理"}
+                {'link': '/control', 'name': '成员管理'},
+                {'link': '/power', 'name': "角色管理"}
             ],
-            changeRed: -1
+            changeRed: -1,
+            nickname: Cookie('staffId')
         }
     },
     components: {
@@ -46,11 +58,47 @@ export default {
         change(index) {
             this.changeRed = String(index);
         },
+        logOut() {
+            Cookie.remove('staffId');
+            Cookie.remove('staffToken');
+            Cookie.remove('staffNickname');
+            Cookie.remove("staffUserId");
+            this.$router.push('/fe-staff/login')
+        }
     }
 }
 </script>
 
 <style scoped>
+.header {
+    background-color: #fff;
+    height: 70px;
+    line-height: 70px; 
+    padding-right: 60px;
+}
+.logout {
+    cursor: pointer;
+    text-align: center;
+    width: 100px;
+}
+.icon {
+   width: 1em; height: 1em;
+   vertical-align: -0.15em;
+   fill: currentColor;
+   overflow: hidden;
+}
+{/*.nickname {
+    text-align: center;
+    cursor: pointer;
+    width: 70px;
+    float: right;
+}*/}
+.nickname {
+    float: right;
+}
+.nickname:hover {
+    background-color: rgba(48, 65, 86, 0.3);
+}
 .highlight {
         background-color: #1f2d3d;
     }
@@ -60,12 +108,12 @@ export default {
     .aside {
         background-color: rgb(48, 65, 86);
         width: 250px;
-        height: 100%;
-        margin: 0 55px 0 0;
+        // height: 100%;
+        min-height: max-content;
+        min-height: -moz-max-content;
     }
     .main {
         flex: 1;
-        margin-right: 100px;
     }
     .menu {
         margin-top: 250px;
@@ -87,7 +135,13 @@ export default {
         display: flex;
         height: 100%;
         background-color: #eee;
+        min-height: max-content;
+        min-height: -moz-max-content;
     }
+.body {
+    margin-right: 100px;
+    margin-left: 40px;
+}
 </style>
 
 

@@ -81,7 +81,7 @@ export default {
     return {
       showDialog: false,
       tableData: [],
-      pageSize: 5,
+      pageSize: 30,
       pageNum: 1,
       total: 0,
       loading: true,
