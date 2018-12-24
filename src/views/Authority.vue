@@ -184,6 +184,7 @@ export default {
     background: #eee;
     height: 45px;
     align-items: baseline;
+    background: rgb(221, 221, 221);
 }
 .module {
     margin-top: 10px;
