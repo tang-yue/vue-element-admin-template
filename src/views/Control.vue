@@ -1,7 +1,7 @@
 <template>
     <div class="power">
       <h2>角色</h2>
-      <div class="createRole">
+      <div class="createRole" v-show="roleAdd">
         <el-button 
           type="primary"
           size="medium"
@@ -28,12 +28,13 @@
         <el-table-column
           label="管理">
           <template slot-scope="scope">
-            <el-button
+            <el-button v-show="permissionMenu"
               size="mini"
               @click="handleEdit(scope.$index, scope.row)">权限管理</el-button>
             <el-button
               size="mini"
               type="danger"
+              v-show="roleDelete"
               @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -74,6 +75,7 @@
 <script>
 import { roleQuery, createRole, deleteRole, getRoleDetails } from '@/services/role.js';
 import Cookie from "js-cookie";
+import { mapState } from 'vuex';
 
 export default {
   name: 'Control',
@@ -90,6 +92,13 @@ export default {
       curItem: {},
       addLoading: false,
     }
+  },
+  computed: {
+    ...mapState([
+      'roleAdd',
+      'roleDelete',
+      'permissionMenu'
+    ])
   },
   props: {
 

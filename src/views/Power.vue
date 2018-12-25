@@ -1,7 +1,7 @@
 <template>
   <div class="power">
     <h2>用户</h2>
-      <div class="createPower">
+      <div class="createPower" v-show="userAdd">
         <el-button 
           type="primary"
           size="medium"
@@ -32,10 +32,10 @@
         <el-table-column
           label="管理">
           <template slot-scope="scope">
-            <el-button
+            <el-button v-show="userUpdate"
               size="mini"
               @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <el-button
+            <el-button v-show="userDelete"
               size="mini"
               type="danger"
               @click="handleDelete(scope.$index, scope.row)">删除</el-button>
@@ -88,9 +88,17 @@
 <script>
 import { userQuery, roleQuery, get, allRole, editUser, deleteUser, createUser } from '@/services/user.js';
 import Cookie from "js-cookie";
+import { mapState } from 'vuex';
 export default {
   name: 'Power',
   props: {
+  },
+  computed: {
+    ...mapState([
+        'userAdd',
+        'userDelete',
+        'userUpdate'
+    ])
   },
   data() {
     return {
@@ -118,13 +126,11 @@ export default {
       dialogType: false
     }
   },
-  computed: {
-     // 使用vuex的时候使用
-  },
   created() {
    // this.$route的用法
    // 生命周期函数，编译模板前使用
    this.getListInfo({});
+   console.log(this.permissionList,  'hahaha')
   },
   components: {
    // 引入的组件
