@@ -13,7 +13,7 @@
                 </el-col>
                 <div>（这里可修改角色名称）</div>
             </div>
-            <div class="create" @click="createPower">+创建新权限</div>
+            <div class="create" v-show="permissionAdd" @click="createPower">+创建新权限</div>
         </div>
         <div class="navigation">
             <span class="module">模块</span>
@@ -27,7 +27,7 @@
                 <el-checkbox v-for="opt in item.checkoutOptions" :label="opt.label" :key="opt.value">{{opt.label}}</el-checkbox>
             </el-checkbox-group> 
         </div>
-        <el-button type="primary" @click="preserve">保存</el-button>
+        <el-button type="primary" v-show="permissionUpdate" @click="preserve">保存</el-button>
         <el-dialog
             title="创建新权限"
             class="dialog"
@@ -66,6 +66,7 @@
 <script>
 import { getModuleAllName, getRoleDetails, createPower, modifyPower } from '@/services/authority.js';
 import Cookie from "js-cookie";
+import { mapState } from 'vuex';
 
 export default {
     name: 'Authority',
@@ -87,6 +88,12 @@ export default {
             labelPosition: 'right'
         }
     },
+    computed: {
+        ...mapState([
+            "permissionAdd",
+            "permissionUpdate"
+        ])
+    }, 
     created() {
         this.getAllInfo();
     },

@@ -130,7 +130,6 @@ export default {
    // this.$route的用法
    // 生命周期函数，编译模板前使用
    this.getListInfo({});
-   console.log(this.permissionList,  'hahaha')
   },
   components: {
    // 引入的组件

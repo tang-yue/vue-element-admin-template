@@ -43,7 +43,6 @@ import { mapState, mapActions } from 'vuex';
 import Cookie from "js-cookie";
 import '../assets/iconfont.js';
 
-
 export default {
     name: 'Power',
     computed: {
@@ -79,7 +78,6 @@ export default {
        }).then((res) => {
          if(res.errCode === 0) {
             this.savePower(res.data.permissionCodeList);
-            console.log(res.data.permissionCodeList, 'codelist');
             this.powerUser = res&&res.data&&res.data.permissionCodeList.indexOf("user:menu") !== -1;
             this.powerRole = res&&res.data&&res.data.permissionCodeList.indexOf("role:menu") !== -1; 
             if(res.data && 

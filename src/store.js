@@ -10,7 +10,9 @@ export default new Vuex.Store({
         permissionMenu: false,
         userAdd: false,
         userDelete: false,
-        userUpdate: false
+        userUpdate: false,
+        permissionAdd: false,
+        permissionUpdate: false
     },
     mutations: {
         savePower(state, payload) {
@@ -20,6 +22,8 @@ export default new Vuex.Store({
             state.userAdd = payload.indexOf("user:add") !== -1;
             state.userDelete = payload.indexOf("user:delete") !== -1;
             state.userUpdate = payload.indexOf("user:update") !== -1;
+            state.permissionAdd = payload.indexOf("permission:add") !== -1;
+            state.permissionUpdate = payload.indexOf("permission:update") !== -1;
         },
     },
     actions: {
