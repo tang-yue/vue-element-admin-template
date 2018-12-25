@@ -50,7 +50,7 @@ export default {
                 {'link': '/power', 'name': "角色管理"}
             ],
             changeRed: -1,
-            nickname: Cookie('staffId')
+            nickname: Cookie('staffNickname')
         }
     },
     components: {
