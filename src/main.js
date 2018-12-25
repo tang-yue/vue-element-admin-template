@@ -8,6 +8,8 @@ import Cookie from 'js-cookie';
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 
+
+
 new Vue({
   router,
   watch: {

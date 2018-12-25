@@ -22,6 +22,9 @@
                 width="200"
                 trigger="click">
                 <p @click="logOut" class="logout">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-log-out"></use>
+                    </svg>
                     退出登录
                 </p>
                 <el-button slot="reference">{{nickname ? nickname : ''}}</el-button>
@@ -36,6 +39,8 @@
 
 <script>
 import Cookie from "js-cookie";
+import '../assets/iconfont.js';
+
 export default {
     name: 'Power',
     data() {
