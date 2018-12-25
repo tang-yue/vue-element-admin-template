@@ -51,15 +51,15 @@
       <p class="space" v-else="usernameWarningM"></p>
       <p>
         <input
-          id="oldPassword"
-          v-model="oldPassword"
+          id="password"
+          v-model="password"
           type="text"
-          name="oldPassword"
+          name="password"
           placeholder="原密码"
         >
       </p>
-      <p class="warning" v-if="oldPasswordWarning">请输入原密码</p>
-      <p class="space" v-else="oldPasswordWarning"></p>
+      <p class="warning" v-if="passwordWarning">请输入原密码</p>
+      <p class="space" v-else="passwordWarning"></p>
       <p>
         <input
           id="newPassword"
@@ -91,12 +91,12 @@
         password: '',
         usernameM:'',
         newPassword: '',
-        oldPassword: '',
+        password: '',
         usernameWarning: false,
         passwordWarning: false,
         login: true,
         usernameWarningM:false,
-        oldPasswordWarning:false,
+        passwordWarning:false,
         newPasswordWarning:false
       }
     },
@@ -142,10 +142,10 @@
         } else {
           this.usernameWarningM = false;
         }
-        if(this.oldPassword === '') {
-          this.oldPasswordWarning = true;
+        if(this.password === '') {
+          this.passwordWarning = true;
         } else {
-          this.oldPasswordWarning = false;
+          this.passwordWarning = false;
         }
         if(this.newPassword === '') {
           this.newPasswordWarning = true;
@@ -153,14 +153,14 @@
           this.newPasswordWarning = false;
         }
         if(this.usernameM !== '' && 
-          this.oldPassword !== '' &&
+          this.password !== '' &&
           this.newPassword !== ''
           ) {
           savePassword({
             type: 'PUT',
             params: {
-              username:this.username,
-              oldPassword:this.oldPassword,
+              username:this.usernameM,
+              password:this.password,
               newPassword:this.newPassword
             }
           }).then((res) => {
@@ -178,7 +178,7 @@
         this.usernameWarning = false;
         this.passwordWarning = false;
         this.usernameM = '';
-        this.oldPassword = '';
+        this.password = '';
         this.newPassword = '';
       }
     }
