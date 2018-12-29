@@ -57,7 +57,7 @@ Update market env:
     - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
   when: manual
   variables:
-    KUBE_CLUSTER: alibj
+    KUBE_CLUSTER: k8sbj
     NAMESPACE: market
     WORKLOAD: deploy/fe-staff
     CONTAINER: fe-staff    
