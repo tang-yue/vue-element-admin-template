@@ -36,7 +36,46 @@ Update testing env:
     WORKLOAD: deploy/fe-staff
     CONTAINER: fe-staff
 
-Update production env:
+Update testing1 env:
+  <<: *deploy_base
+  only:
+    - master
+  before_script:
+    - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
+  when: manual
+  variables:
+    KUBE_CLUSTER: bjt
+    NAMESPACE: testing1
+    WORKLOAD: deploy/fe-staff
+    CONTAINER: fe-staff
+
+Update testing2 env:
+  <<: *deploy_base
+  only:
+    - master
+  before_script:
+    - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
+  when: manual
+  variables:
+    KUBE_CLUSTER: bjt
+    NAMESPACE: testing2
+    WORKLOAD: deploy/fe-staff
+    CONTAINER: fe-staff    
+
+Update testing3 env:
+  <<: *deploy_base
+  only:
+    - master
+  before_script:
+    - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
+  when: manual
+  variables:
+    KUBE_CLUSTER: bjt
+    NAMESPACE: testing3
+    WORKLOAD: deploy/fe-staff
+    CONTAINER: fe-staff
+
+Update production env(alibj):
   <<: *deploy_base
   only:
     - /^release-.*$/
@@ -48,6 +87,33 @@ Update production env:
     NAMESPACE: production
     WORKLOAD: deploy/fe-staff
     CONTAINER: fe-staff
+ 
+Update production env(k8sbj):
+  <<: *deploy_base
+  only:
+    - /^release-.*$/
+  before_script:
+    - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
+  when: manual
+  variables:
+    KUBE_CLUSTER: k8sbj
+    NAMESPACE: production
+    WORKLOAD: deploy/fe-staff
+    CONTAINER: fe-staff
+    
+Update staging env:
+  <<: *deploy_base
+  only:
+    - /^release-.*$/
+  before_script:
+    - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
+  when: manual
+  variables:
+    KUBE_CLUSTER: k8sbj
+    NAMESPACE: staging
+    WORKLOAD: deploy/fe-staff
+    CONTAINER: fe-staff
+    
     
 Update market env:
   <<: *deploy_base
