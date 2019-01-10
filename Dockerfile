@@ -21,3 +21,4 @@ FROM registry.docker-cn.com/library/nginx:1.13.3-alpine
 
 COPY --from=builder /project/dist /project/dist
 ADD  nginx.conf /etc/nginx/conf.d/default.conf
+ADD  nginx.conf.default /etc/nginx/nginx.conf
