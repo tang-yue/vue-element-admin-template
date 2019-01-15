@@ -195,7 +195,7 @@ export default {
       if(this.dialogType) {
         editUser({
           type: 'put',
-          params: { "roleIdList": roleIdList, userId: 1, ...this.curItem }, 
+          params: { ...this.curItem, "roleIdList": roleIdList, userId: 1 }, 
         }).then((res) => {
           if(res.errCode === 0) {
             this.$message({message: "更新账号成功", duration: 3000});
@@ -218,6 +218,7 @@ export default {
         })
       }
       this.dialogFormVisible = false;
+      this.getListInfo({});
     },
     handleEdit(index, row) {
       this.getRowInfo(row.id);

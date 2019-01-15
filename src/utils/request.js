@@ -7,7 +7,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((req) => {
-  req.headers.authorization = true ? Cookie("staffToken") : null;
+  req.headers.authorization = true ? Cookie('staffToken') : null;
   // req.headers['x-adtag'] = localStorage.getItem('adtag') ? localStorage.getItem('adtag') : null;
   return req;
 }, (err) => Promise.reject(err));
