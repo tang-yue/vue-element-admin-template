@@ -21,6 +21,7 @@
           id="password"
           v-model="password"
           name="password"
+          type="password"
           placeholder="密码"
         >
       </p>
