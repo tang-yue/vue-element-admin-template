@@ -69,10 +69,10 @@ export default {
     created() {
       if (window.location.pathname.split('/')[2] === 'power') {
         this.changeRed = 1;
-       } else {
+      } else {
         this.changeRed = 2;
-       }
-       this.getUserData();
+      }
+      this.getUserData();
     },
     methods: {
         ...mapActions([
@@ -91,11 +91,13 @@ export default {
                         res.data.permissionCodeList.indexOf("user:menu") !== -1 && 
                         res.data.permissionCodeList.indexOf("role:menu") !== -1) {
                          this.hasPower = true;
-                    } else {
-                        this.$router.push('/fe-staff/login');
-                         this.$message({message: "抱歉你权限登录进去查看页面", duration: 5000});
+                    }  else {
+                         this.$router.push('/fe-staff/login');
+                         this.$message({message: "抱歉你没有权限登录进去查看页面", duration: 5000});
                          this.hasPower = false;
                     }
+                } else if(res.errCode === 10110002) {
+                    this.$router.push('/fe-staff/login');
                 }
             }) 
         },

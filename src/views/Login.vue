@@ -121,7 +121,7 @@
             if(res.errCode === 0) {
               Cookie.set('staffToken', res.data.token);
               Cookie.set('staffUserId', res.data.user.id);
-              Cookie.set('staffId', res.data.user.staffId);
+              Cookie.set('staffId', res.data.user.uuid);
               Cookie.set('staffNickname', res.data.user.username);
               this.$router.push(`/fe-staff/power`);
             } else if(res.errCode === 10110002) {
@@ -170,6 +170,8 @@
               this.login = true;
             } else if(res.errCode === 10110002) {
               this.$router.push(`/fe-staff/login`)
+            } else {
+              this.$message({message:'修改密码失败，请重试', duration: 3000});
             }
           })
         }

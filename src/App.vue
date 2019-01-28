@@ -23,6 +23,7 @@ export default {
 
 <style>
     html,body,#app {
+        font-size: 14px;
         height: 100%;
     }
 </style>
