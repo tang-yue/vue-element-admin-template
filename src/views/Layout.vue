@@ -72,30 +72,33 @@ export default {
        } else {
         this.changeRed = 2;
        }
-       getUserInfo({
-         type: 'get',
-         params: {userId: Cookie("staffUserId"), staffId: Cookie("staffId"), token: Cookie("staffToken")}
-       }).then((res) => {
-         if(res.errCode === 0) {
-            this.savePower(res.data.permissionCodeList);
-            this.powerUser = res&&res.data&&res.data.permissionCodeList.indexOf("user:menu") !== -1;
-            this.powerRole = res&&res.data&&res.data.permissionCodeList.indexOf("role:menu") !== -1; 
-            if(res.data && 
-                res.data.permissionCodeList.indexOf("user:menu") !== -1 && 
-                res.data.permissionCodeList.indexOf("role:menu") !== -1) {
-                 this.hasPower = true;
-            } else {
-                this.$router.push('/fe-staff/login');
-                 this.$message({message: "抱歉你权限登录进去查看页面", duration: 5000});
-                 this.hasPower = false;
-            }
-         }
-       })
+       this.getUserData();
     },
     methods: {
         ...mapActions([
             'savePower'
         ]),
+        getUserData() {
+            getUserInfo({
+                type: 'get',
+                params: {userId: Cookie("staffUserId"), staffId: Cookie("staffId"), token: Cookie("staffToken")}
+            }).then((res) => {
+                if(res.errCode === 0) {
+                    this.savePower(res.data.permissionCodeList);
+                    this.powerUser = res&&res.data&&res.data.permissionCodeList.indexOf("user:menu") !== -1;
+                    this.powerRole = res&&res.data&&res.data.permissionCodeList.indexOf("role:menu") !== -1; 
+                    if(res.data && 
+                        res.data.permissionCodeList.indexOf("user:menu") !== -1 && 
+                        res.data.permissionCodeList.indexOf("role:menu") !== -1) {
+                         this.hasPower = true;
+                    } else {
+                        this.$router.push('/fe-staff/login');
+                         this.$message({message: "抱歉你权限登录进去查看页面", duration: 5000});
+                         this.hasPower = false;
+                    }
+                }
+            }) 
+        },
         change(index) {
             this.changeRed = String(index);
         },
