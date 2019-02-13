@@ -38,6 +38,8 @@ Update testing env:
 
 Update testing1 env:
   <<: *deploy_base
+  except: 
+  - /^release-.*$/  
   before_script:
     - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
   when: manual
@@ -49,6 +51,8 @@ Update testing1 env:
 
 Update testing2 env:
   <<: *deploy_base
+  except: 
+  - /^release-.*$/  
   before_script:
     - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
   when: manual
@@ -60,6 +64,8 @@ Update testing2 env:
 
 Update testing3 env:
   <<: *deploy_base
+  except: 
+  - /^release-.*$/  
   before_script:
     - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
   when: manual
@@ -68,19 +74,33 @@ Update testing3 env:
     NAMESPACE: testing3
     WORKLOAD: deploy/fe-staff
     CONTAINER: fe-staff
-
-Update production env(alibj):
+    
+Update testing4 env:
   <<: *deploy_base
-  only:
-    - /^release-.*$/
+  except: 
+  - /^release-.*$/
   before_script:
-    - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
+    - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
   when: manual
   variables:
-    KUBE_CLUSTER: alibj
-    NAMESPACE: production
+    KUBE_CLUSTER: bjt
+    NAMESPACE: testing4
     WORKLOAD: deploy/fe-staff
     CONTAINER: fe-staff
+
+Update testing5 env:
+  <<: *deploy_base
+  except: 
+  - /^release-.*$/  
+  before_script:
+    - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
+  when: manual
+  variables:
+    KUBE_CLUSTER: bjt
+    NAMESPACE: testing5
+    WORKLOAD: deploy/fe-staff
+    CONTAINER: fe-staff
+    
  
 Update production env(k8sbj):
   <<: *deploy_base
