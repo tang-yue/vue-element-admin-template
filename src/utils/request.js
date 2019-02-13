@@ -3,7 +3,7 @@ import Cookie from 'js-cookie';
 
 const api = axios.create({
   baseURL: '',
-  timeout: 5000
+  timeout: 500000
 });
 
 api.interceptors.request.use((req) => {

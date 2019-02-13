@@ -9,9 +9,12 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-plugin-import": "^1.11.0",
     "echarts": "^4.2.0-rc.2",
     "element-ui": "^2.4.11",
+    "iview": "^3.2.2",
     "js-cookie": "^2.2.0",
+    "moment": "^2.24.0",
     "normalize.css": "^8.0.1",
     "qs": "^6.6.0",
     "vue": "^2.5.17",
