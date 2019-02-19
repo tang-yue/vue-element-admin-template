@@ -101,25 +101,24 @@
       <el-table-column
         label="管理">
         <template slot-scope="scope">
-          <el-button v-show="userUpdate"
+          <el-button
             size="mini"
+            v-show="scope.row.deleteStatus === '1'"
             @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button
             size="mini"
             type="primary"
+            :class="{'moveRight': scope.row.deleteStatus === '2'&&userUpdate}"
             @click="isUse(scope.$index, scope.row)"
             v-show="scope.row.deleteStatus !== '3'">
             {{scope.row.deleteStatus === '2' ?'启用':
             scope.row.deleteStatus === '1' ? '禁用' : '---'
             }}</el-button>
-          <el-button v-show="userDelete"
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination
+      v-if="isRender"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :page-sizes="[5, 10, 20, 30]"
@@ -327,13 +326,20 @@
         :label-position="labelPosition" 
         label-width="100px" 
         :model="addStaffData">
-        <el-form-item label="员工姓名：" prop="name">
+        <el-form-item 
+          label="员工姓名：" 
+          prop="name"
+          :rules="{required: true, message: '员工姓名不能为空'}">
           <el-input v-model="addStaffData.name"></el-input>
         </el-form-item>
-        <el-form-item label="员工手机：" prop="phone">
-          <el-input v-model="addStaffData.phone"></el-input>
+        <el-form-item label="员工手机：" 
+          prop="phone"
+          :rules="{required: true, message: '员工手机号不能为空'}">
+          <el-input size="small" v-model="addStaffData.phone"></el-input>
         </el-form-item>
-        <el-form-item label="员工邮箱：" prop="email">
+        <el-form-item label="员工邮箱：" 
+          prop="email"
+          :rules="{required: true, message: '员工邮箱不能为空'}">
           <el-input v-model="addStaffData.email"></el-input>
         </el-form-item>
         <el-form-item label="员工性别：">
@@ -387,6 +393,7 @@ export default {
   },
   data() {
     return {
+      isRender: true,
       staffInfoId: null,
       addStaffData: {},
       gender: 2,
@@ -565,6 +572,10 @@ export default {
         }).then((res) => {
           if(res.errCode === 0) {
             this.$message({message: "创建账号成功", duration: 3000});
+            this.isRender = false;
+            this.$nextTick(function() {
+              this.isRender = true;
+            });
             this.getListInfo();
           } else if(res.errCode === 10110011) {
             this.$message({message: "该账号已经存在，请勿重复添加", duration: 3000});
@@ -623,7 +634,6 @@ export default {
     },
     addAccount() {
       this.pageNum = 1;
-      this.pageSize = 5;
       this.curItem = {};
       this.roleList = [];
       this.newStaffInfo = {};
@@ -632,7 +642,10 @@ export default {
     },
     search() {
       this.pageNum = 1;
-      this.pageSize = 5;
+      this.isRender = false;
+      this.$nextTick(function() {
+        this.isRender = true;
+      });
       this.getListInfo();
     },
     reset() {
@@ -642,7 +655,11 @@ export default {
       this.hasStaff = null;
       this.accountStatus = null;
       this.pageNum = 1;
-      this.pageSize = 5;
+      // this.pageSize = 5;
+      this.isRender = false;
+      this.$nextTick(function() {
+        this.isRender = true;
+      });
       this.getListInfo();
     },
     modifyStaffInfo() {
@@ -759,6 +776,9 @@ export default {
 }
 .search-staff {
   width: 20%;
+}
+.moveRight {
+  margin-left: 66px;
 }
 .el-table td, 
 .el-table th {
