@@ -88,7 +88,7 @@ export default {
                     this.powerUser = res&&res.data&&res.data.permissionCodeList.indexOf("user:menu") !== -1;
                     this.powerRole = res&&res.data&&res.data.permissionCodeList.indexOf("role:menu") !== -1; 
                     if(res.data && 
-                        res.data.permissionCodeList.indexOf("user:menu") !== -1 && 
+                        res.data.permissionCodeList.indexOf("user:menu") !== -1 || 
                         res.data.permissionCodeList.indexOf("role:menu") !== -1) {
                          this.hasPower = true;
                     }  else {

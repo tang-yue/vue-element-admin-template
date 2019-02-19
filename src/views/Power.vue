@@ -103,12 +103,12 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            v-show="scope.row.deleteStatus === '1'"
+            v-show="userUpdate&&scope.row.deleteStatus === '1'"
             @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button
             size="mini"
             type="primary"
-            :class="{'moveRight': scope.row.deleteStatus === '2'&&userUpdate}"
+            :class="{'moveRight': scope.row.deleteStatus === '2'}"
             @click="isUse(scope.$index, scope.row)"
             v-show="scope.row.deleteStatus !== '3'">
             {{scope.row.deleteStatus === '2' ?'启用':
