@@ -225,6 +225,7 @@
       title="选择员工"
       class="dialog"
       style="width: 80%"
+      v-if="selectStaffVisible"
       :visible.sync="selectStaffVisible"
       :before-close="closeSelectStaff">
         <span>员工姓名：</span> 
@@ -301,9 +302,11 @@
         class="staffPagination"
         small
         layout="prev, pager, next"
+        @current-change="handleCurrentChangeStaff"
         prev-text="上一页"
         next-text="下一页"
-        :total="10">
+        :page-size="staffPageSize"
+        :total="staffTotal">
       </el-pagination>
       <p>
         新教师还未添加？点击
@@ -393,7 +396,7 @@ export default {
       newStaffInfo:{},
       selectStaffVisible:false,
       staffTotal:0,
-      staffPageSize: 10,
+      staffPageSize: 5,
       staffPageNum: 1,
       staffName:'',
       staffPhone:'',
@@ -432,6 +435,7 @@ export default {
     Option
   },
   methods: {
+
     isUse(index, row) {
       let deleteStatus = 1;
       if(row.deleteStatus === '1') {
@@ -613,6 +617,10 @@ export default {
       this.pageNum = val;
       this.getListInfo();
     },
+    handleCurrentChangeStaff(val) {
+      this.staffPageNum = val;
+      this.getStaffInfo();
+    },
     addAccount() {
       this.pageNum = 1;
       this.pageSize = 5;
@@ -639,6 +647,9 @@ export default {
     },
     modifyStaffInfo() {
       this.dialogFormVisible = false;
+      this.getStaffInfo();  
+    },
+    getStaffInfo() {
       let querys = {
         pageNum:this.staffPageNum,
         pageSize:this.staffPageSize,
@@ -655,11 +666,16 @@ export default {
           this.staffPageNum = res.data.pageNum;
           this.staffPageSize = res.data.pageSize;
           this.staffTotal = res.data.total;
-          this.selectStaffVisible = true;
+          this.$nextTick(function() {
+            this.selectStaffVisible = true;
+          });
+          this.staffName = '';
+          this.staffPhone = '';
+          this.staffEmail = '';
         } else if(res.errCode === 10110002) {
           this.$router.push(`/fe-staff/login`);
         }
-      })     
+      })  
     },
     selectStaff(index, row) {
       this.selectStaffVisible = false;
@@ -672,7 +688,8 @@ export default {
       this.selectStaffVisible = false;
     },
     searchStaff() {
-      this.modifyStaffInfo();
+      this.staffPageNum = 1;
+      this.getStaffInfo();
     },
     // 关闭添加员工信息弹窗
     closeAddStaff() {
@@ -686,21 +703,29 @@ export default {
       this.selectStaffVisible = false;
     },
     submitStaffInfo() {
-      addStaffInfo({
-        type: "POST",
-        params: {
-          ...this.addStaffData, 
-          gender:this.gender
-        }
-      }).then((res) => {
-        if(res.errCode === 0) {
-          this.closeAddStaff();
-          this.$message({message: "添加员工信息成功", duration: 3000});
-          this.modifyStaffInfo();
-        } else if(res.errCode === 10110002) {
-          this.$router.push(`/fe-staff/login`);
-        }
-      })
+      if(this.addStaffData.name === '' || this.addStaffData.name === undefined) {
+        this.$message({message: "员工姓名不能为空，请重新填写", duration: 3000});
+      } else if(!/^1[34578]\d{9}$/.test(this.addStaffData.phone)) {
+        this.$message({message: "填写手机号格式有误，请重新填写", duration: 3000});
+      } else if(!/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(this.addStaffData.email)) {
+        this.$message({message: "填写的邮箱格式有误，请重新填写", duration: 3000});
+      } else {
+        addStaffInfo({
+          type: "POST",
+          params: {
+            ...this.addStaffData, 
+            gender:this.gender
+          }
+        }).then((res) => {
+          if(res.errCode === 0) {
+            this.closeAddStaff();
+            this.$message({message: "添加员工信息成功", duration: 3000});
+            this.modifyStaffInfo();
+          } else if(res.errCode === 10110002) {
+            this.$router.push(`/fe-staff/login`);
+          }
+        })
+      }
     }
   }
 }
