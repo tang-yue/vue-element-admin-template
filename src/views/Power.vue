@@ -669,6 +669,9 @@ export default {
           this.$nextTick(function() {
             this.selectStaffVisible = true;
           });
+          this.staffName = '';
+          this.staffPhone = '';
+          this.staffEmail = '';
         } else if(res.errCode === 10110002) {
           this.$router.push(`/fe-staff/login`);
         }
@@ -700,7 +703,7 @@ export default {
       this.selectStaffVisible = false;
     },
     submitStaffInfo() {
-      if(this.addStaffData.name === '' || undefined) {
+      if(this.addStaffData.name === '' || this.addStaffData.name === undefined) {
         this.$message({message: "员工姓名不能为空，请重新填写", duration: 3000});
       } else if(!/^1[34578]\d{9}$/.test(this.addStaffData.phone)) {
         this.$message({message: "填写手机号格式有误，请重新填写", duration: 3000});
