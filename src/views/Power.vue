@@ -110,7 +110,7 @@
             type="primary"
             :class="{'moveRight': scope.row.deleteStatus === '2'}"
             @click="isUse(scope.$index, scope.row)"
-            v-show="scope.row.deleteStatus !== '3'">
+            v-show="userUpdate&&scope.row.deleteStatus !== '3'">
             {{scope.row.deleteStatus === '2' ?'启用':
             scope.row.deleteStatus === '1' ? '禁用' : '---'
             }}</el-button>
@@ -434,6 +434,7 @@ export default {
     }
   },
   created() {
+   console.log(this.userUpdate, 'this.userUpdate');
    this.getListInfo(true);
   },
   components: {
