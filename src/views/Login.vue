@@ -15,7 +15,7 @@
         >
       </p>
       <p class="warning" v-if="usernameWarning">请输入用户名</p>
-      <p class="space" v-else="usernameWarning"></p>
+      <p class="space" v-else></p>
       <p>
         <input
           id="password"
@@ -26,7 +26,7 @@
         >
       </p>
       <p class="warning" v-if="passwordWarning">请输入密码</p>
-      <p class="space" v-else="passwordWarning"></p>
+      <p class="space" v-else></p>
       <p>
         <input class="submit" type="submit" value="登录" @click="checkForm">
       </p>
@@ -35,7 +35,7 @@
       </p>
     </div>
     <div
-      v-else="login"
+      v-else
       class="formCard"
     >
       <h3>修改密码</h3>
@@ -49,7 +49,7 @@
         >
       </p>
       <p class="warning" v-if="usernameWarningM">请输入用户名</p>
-      <p class="space" v-else="usernameWarningM"></p>
+      <p class="space" v-else></p>
       <p>
         <input
           id="password"
@@ -60,7 +60,7 @@
         >
       </p>
       <p class="warning" v-if="passwordWarning">请输入原密码</p>
-      <p class="space" v-else="passwordWarning"></p>
+      <p class="space" v-else></p>
       <p>
         <input
           id="newPassword"
@@ -71,7 +71,7 @@
         >
       </p>
        <p class="warning" v-if="newPasswordWarning">请输入新密码</p>
-       <p class="space" v-else="newPasswordWarning"></p>
+       <p class="space" v-else></p>
       <p>
         <input class="submitM" type="submit" value="保存" @click="preserve">
       </p>
@@ -82,96 +82,96 @@
   </div>
 </template>
 <script>
-  import { login, savePassword } from '@/services/login.js';
+  import { login, savePassword } from '@/services/login';
   import Cookie from 'js-cookie';
+
   export default {
     name: 'Login',
     data() {
       return {
         username: '',
         password: '',
-        usernameM:'',
+        usernameM: '',
         newPassword: '',
-        password: '',
         usernameWarning: false,
-        passwordWarning: false,
         login: true,
-        usernameWarningM:false,
-        passwordWarning:false,
-        newPasswordWarning:false
+        usernameWarningM: false,
+        passwordWarning: false,
+        newPasswordWarning: false
       }
     },
     methods: {
       checkForm() {
-        if(this.username === '') {
+        if (this.username === '') {
           this.usernameWarning = true;
         } else {
           this.usernameWarning = false;
         }
-        if(this.password === '') {
+        if (this.password === '') {
           this.passwordWarning = true;
         } else {
           this.passwordWarning = false;
         }
-        if(this.username !== '' && this.password !== '') {
+        if (this.username !== '' && this.password !== '') {
           login({
             type: 'post',
             params: { username: this.username, password: this.password },
           }).then((res) => {
-            if(res.errCode === 0) {
+            if (res.errCode === 0) {
               Cookie.set('staffToken', res.data.token);
               Cookie.set('staffUserId', res.data.user.id);
               Cookie.set('staffId', res.data.user.uuid);
               Cookie.set('staffNickname', res.data.user.username);
-              this.$router.push(`/fe-staff/power`);
-            } else if(res.errCode === 10110002) {
-              this.$router.push(`/fe-staff/login`);
+              this.$router.push('/fe-staff/power');
+            } else if (res.errCode === 10110002) {
+              this.$router.push('/fe-staff/login');
             } else {
-              this.$message({message: "对不起，你和用户名和密码输入错误，请重新输入", duration: 3000});
+              this.$message({ message: '对不起，你和用户名和密码输入错误，请重新输入', duration: 3000 });
             }
           })
         }
       }, 
       modifyPassword() {
         this.login = false;
-         this.username = '';
+        this.username = '';
         this.password = '';
+        this.passwordWarning = false;
       },
       preserve() {
-        if(this.usernameM === '') {
+        if (this.usernameM === '') {
           this.usernameWarningM = true;
         } else {
           this.usernameWarningM = false;
         }
-        if(this.password === '') {
+        if (this.password === '') {
           this.passwordWarning = true;
         } else {
           this.passwordWarning = false;
         }
-        if(this.newPassword === '') {
+        if (this.newPassword === '') {
           this.newPasswordWarning = true;
         } else {
           this.newPasswordWarning = false;
         }
-        if(this.usernameM !== '' && 
-          this.password !== '' &&
-          this.newPassword !== ''
+        if (this.usernameM !== '' 
+          && this.password !== ''
+          && this.newPassword !== ''
           ) {
           savePassword({
             type: 'PUT',
             params: {
-              username:this.usernameM,
-              password:this.password,
-              newPassword:this.newPassword
+              username: this.usernameM,
+              password: this.password,
+              newPassword: this.newPassword
             }
           }).then((res) => {
-            if(res.errCode === 0) {
-              this.$message({message: "修改密码成功", duration: 3000});
+            if (res.errCode === 0) {
+              this.$message({ message: '修改密码成功', duration: 3000 });
               this.login = true;
-            } else if(res.errCode === 10110002) {
-              this.$router.push(`/fe-staff/login`)
+            } else if (res.errCode === 10110002) {
+              this.$router.push('/fe-staff/login')
             } else {
-              this.$message({message:'修改密码失败，请重试', duration: 3000});
+              this.$message({ message: '修改密码失败，请重试', duration: 3000 });
             }
           })
         }
@@ -275,5 +275,4 @@ h3 {
 .backLogin {
   margin-top: 20px;
 }
-
 </style>

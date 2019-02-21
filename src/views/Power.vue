@@ -146,15 +146,21 @@
           <el-checkbox-group 
             v-model="roleList"
             :min="1">
-            <el-checkbox v-for="role in allRoleList" :label="role.label" :key="role.value">{{role.label}}</el-checkbox>
+            <el-checkbox 
+              v-for="role in allRoleList" 
+              :label="role.label" 
+              :key="role.value">{{role.label}}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="员工信息：">
           <div style="display: flex; align-items: center">
             <div v-show="curItem.staffInfo || JSON.stringify(newStaffInfo) !== '{}'">
-              <p>姓名 :{{newStaffInfo.name ? newStaffInfo.name : curItem.staffInfo&&curItem.staffInfo.name}}</p>
-              <p>手机号 :{{newStaffInfo.phone ? newStaffInfo.phone : curItem.staffInfo&&curItem.staffInfo.phone}}</p>
-              <p>邮箱 :{{newStaffInfo.email ? newStaffInfo.email : curItem.staffInfo&&curItem.staffInfo.email }}</p>
+              <p>姓名 :{{newStaffInfo.name 
+                ? newStaffInfo.name : curItem.staffInfo&&curItem.staffInfo.name}}</p>
+              <p>手机号 :{{newStaffInfo.phone 
+                ? newStaffInfo.phone : curItem.staffInfo&&curItem.staffInfo.phone}}</p>
+              <p>邮箱 :{{newStaffInfo.email 
+                ? newStaffInfo.email : curItem.staffInfo&&curItem.staffInfo.email }}</p>
             </div>
             <el-button
               style="height: 30px;margin-left:80px"
@@ -188,21 +194,24 @@
         <el-table-column
           label="员工ID">
           <template slot-scope="scope">
-            <span>{{scope.row.staffInfoVo&&scope.row.staffInfoVo.id ? scope.row.staffInfoVo.id : "----"}}</span>
+            <span>{{scope.row.staffInfoVo&&scope.row.staffInfoVo.id 
+              ? scope.row.staffInfoVo.id : "----"}}</span>
           </template>
         </el-table-column>
         <el-table-column
           prop="staffInfoVo"
           label="员工姓名">
           <template slot-scope="scope">
-            <span>{{scope.row.staffInfoVo&&scope.row.staffInfoVo.name ? scope.row.staffInfoVo.name : "----"}}</span>
+            <span>{{scope.row.staffInfoVo&&scope.row.staffInfoVo.name 
+              ? scope.row.staffInfoVo.name : "----"}}</span>
           </template>
         </el-table-column>
         <el-table-column
           prop="staffInfoVo"
           label="员工手机号">
           <template slot-scope="scope">
-            <span>{{scope.row.staffInfoVo&&scope.row.staffInfoVo.phone ? scope.row.staffInfoVo.phone : "----"}}</span>
+            <span>{{scope.row.staffInfoVo&&scope.row.staffInfoVo.phone 
+              ? scope.row.staffInfoVo.phone : "----"}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -361,24 +370,17 @@
 import { 
   staffQuery, 
   userQuery, 
-  roleQuery, 
   get, 
   allRole, 
   editUser, 
   deleteUser, 
   createUser,
-  bindStaff,
   accountStaff,
   addStaffInfo 
-} from '@/services/user.js';
-import Cookie from "js-cookie";
-import moment from "moment";
+} from '@/services/user';
+import Cookie from 'js-cookie';
+import moment from 'moment';
 import { mapState } from 'vuex';
-import { 
-  Input, 
-  Select, 
-  Option 
-} from 'iview';
 
 export default {
   name: 'Power',
@@ -397,17 +399,17 @@ export default {
       staffInfoId: null,
       addStaffData: {},
       gender: 2,
-      addStaffVisible:false,
-      accountHistory:[],
-      staffData:[],
-      newStaffInfo:{},
-      selectStaffVisible:false,
-      staffTotal:0,
+      addStaffVisible: false,
+      accountHistory: [],
+      staffData: [],
+      newStaffInfo: {},
+      selectStaffVisible: false,
+      staffTotal: 0,
       staffPageSize: 5,
       staffPageNum: 1,
-      staffName:'',
-      staffPhone:'',
-      staffEmail:'',
+      staffName: '',
+      staffPhone: '',
+      staffEmail: '',
       id: '',
       username: '',
       nickname: '',
@@ -419,7 +421,7 @@ export default {
       pageNum: 1,
       total: 0,
       loading: true,
-      labelPosition: "right",
+      labelPosition: 'right',
       formLabelAlign: {
         name: '',
         region: '',
@@ -434,19 +436,15 @@ export default {
     }
   },
   created() {
-   console.log(this.userUpdate, 'this.userUpdate');
    this.getListInfo(true);
   },
   components: {
-    Input,
-    Select,
-    Option
   },
   methods: {
 
     isUse(index, row) {
       let deleteStatus = 1;
-      if(row.deleteStatus === '1') {
+      if (row.deleteStatus === '1') {
         deleteStatus = 2;
       } 
       editUser({
@@ -456,24 +454,24 @@ export default {
             deleteStatus,
             }, 
         }).then((res) => {
-          if(res.errCode === 0) {
+          if (res.errCode === 0) {
             this.getListInfo();
-          } else if(res.errCode === 10110002) {
-            this.$router.push(`/fe-staff/login`);
+          } else if (res.errCode === 10110002) {
+            this.$router.push('/fe-staff/login');
           }
         })
     },
     handleMoment(timestamp) {
-      let arr = moment(timestamp).format("L").split('/');
-      return arr[2] + '-' + arr[0] + '-' + arr[1];
+      const arr = moment(timestamp).format('L').split('/');
+      return `${arr[2]}-${arr[0]}-${arr[1]}`;
     },
     getListInfo(obj) {
-      let querysUser = {
+      const querysUser = {
         pageNum: this.pageNum,
-        pageSize:this.pageSize,
-        id:this.id === '' ? '' : Number(this.id),
-        username:this.username,
-        nickname:this.nickname,
+        pageSize: this.pageSize,
+        id: this.id === '' ? '' : Number(this.id),
+        username: this.username,
+        nickname: this.nickname,
         hasStaff: this.hasStaff === null ? null : Number(this.hasStaff),
         accountStatus: Number(this.accountStatus) || null
       }
@@ -481,28 +479,28 @@ export default {
         type: 'get',
         params: querysUser,
       }).then((res) => {
-        if(res.errCode === 0) {
+        if (res.errCode === 0) {
           this.tableData = res.data.list;
           this.pageNum = res.data.pageNum;
           this.pageSize = res.data.pageSize;
           this.total = res.data.total;
           this.loading = false;
-        } else if(res.errCode === 10110002) {
-          this.$router.push(`/fe-staff/login`);
+        } else if (res.errCode === 10110002) {
+          this.$router.push('/fe-staff/login');
         }
       });
-      if(obj) {
+      if (obj) {
         allRole({
           type: 'get',
         }).then((res) => {
-          if(res.errCode === 0) {
-            let result = [];
-            res.data.forEach(function(ele) {
-              result.push({"label": ele.roleName, "value": ele.id});
+          if (res.errCode === 0) {
+            const result = [];
+            res.data.forEach((ele) => {
+              result.push({ label: ele.roleName, value: ele.id });
             })
             this.allRoleList = result;
-          } else if(res.errCode === 10110002) {
-            this.$router.push(`/fe-staff/login`);
+          } else if (res.errCode === 10110002) {
+            this.$router.push('/fe-staff/login');
           }
         })
       }
@@ -512,21 +510,21 @@ export default {
         type: 'get',
         params: id
       }).then((res) => {
-        if(res.errCode === 0) {
+        if (res.errCode === 0) {
           this.curItem = res.data;
-          this.roleList = res.data.roleName.split(",");
-        } else if(res.errCode === 10110002) {
-          this.$router.push(`/fe-staff/login`);
+          this.roleList = res.data.roleName.split(',');
+        } else if (res.errCode === 10110002) {
+          this.$router.push('/fe-staff/login');
         }
       })
       accountStaff({
         type: 'get',
-        params: {accountId:id,}
+        params: { accountId: id }
       }).then((res) => {
-        if(res.errCode === 0) {
+        if (res.errCode === 0) {
           this.accountHistory = res.data;
-        } else if(res.errCode === 10110002) {
-          this.$router.push(`/fe-staff/login`);
+        } else if (res.errCode === 10110002) {
+          this.$router.push('/fe-staff/login');
         }
       })
     },
@@ -534,57 +532,57 @@ export default {
       this.dialogFormVisible = false;
     },
     onSubmit() {
-      let roleIdList = [];
-      for(let i = 0; i < this.allRoleList.length; i++) {
-        if(this.roleList.indexOf(this.allRoleList[i].label) !== -1) {
+      const roleIdList = [];
+      for (let i = 0; i < this.allRoleList.length; i += 1) {
+        if (this.roleList.indexOf(this.allRoleList[i].label) !== -1) {
           roleIdList.push(this.allRoleList[i].value);
         }
       }
-      if(this.dialogType) {
+      if (this.dialogType) {
         editUser({
           type: 'put',
           params: { 
-            "roleIdList": roleIdList,
+            roleIdList,
             id: this.curItem.id, 
             username: this.curItem.username,
             nickname: this.curItem.nickname,
             staffInfoId: this.staffInfoId,
-            operatorId: Number(Cookie("staffUserId"))
+            operatorId: Number(Cookie('staffUserId'))
           } 
         }).then((res) => {
-          if(res.errCode === 0) {
-            this.$message({message: "更新账号成功", duration: 3000});
+          if (res.errCode === 0) {
+            this.$message({ message: '更新账号成功', duration: 3000 });
             this.getListInfo();
-          } else if(res.errCode === 10110002) {
-            this.$router.push(`/fe-staff/login`);
+          } else if (res.errCode === 10110002) {
+            this.$router.push('/fe-staff/login');
           }
         })
-          this.$message({message: "请稍等...", duration: 8000});
+          this.$message({ message: '请稍等...', duration: 8000 });
       } else {
         createUser({
           type: 'post',
           params: { 
-            "roleIdList": roleIdList, 
+            roleIdList, 
             username: this.curItem.username,
             nickname: this.curItem.nickname,
             staffInfoId: this.staffInfoId,
-            operatorId: Number(Cookie("staffUserId"))
+            operatorId: Number(Cookie('staffUserId'))
           }
         }).then((res) => {
-          if(res.errCode === 0) {
-            this.$message({message: "创建账号成功", duration: 3000});
+          if (res.errCode === 0) {
+            this.$message({ message: '创建账号成功', duration: 3000 });
             this.isRender = false;
-            this.$nextTick(function() {
+            this.$nextTick(() => {
               this.isRender = true;
             });
             this.getListInfo();
-          } else if(res.errCode === 10110011) {
-            this.$message({message: "该账号已经存在，请勿重复添加", duration: 3000});
-          } else if(res.errCode === 10110002) {
-            this.$router.push(`/fe-staff/login`);
+          } else if (res.errCode === 10110011) {
+            this.$message({ message: '该账号已经存在，请勿重复添加', duration: 3000 });
+          } else if (res.errCode === 10110002) {
+            this.$router.push('/fe-staff/login');
           }
         })
-        this.$message({message: "请稍等...", duration: 8000});
+        this.$message({ message: '请稍等...', duration: 8000 });
       }
       this.dialogFormVisible = false;
     },
@@ -601,17 +599,17 @@ export default {
         type: 'warning'
       }).then(() => {
           deleteUser({
-            type: "delete",
-            params: {id:row.id}
+            type: 'delete',
+            params: { id: row.id }
           }).then((res) => {
-          if(res.errCode === 0) {
+          if (res.errCode === 0) {
             this.$message({
-              message: "删除账号成功", 
+              message: '删除账号成功', 
               duration: 3000
             });
             this.getListInfo();
-          } else if(res.errCode === 10110002) {
-            this.$router.push(`/fe-staff/login`);
+          } else if (res.errCode === 10110002) {
+            this.$router.push('/fe-staff/login');
           }
         }).catch(() => {
           // this.$message({
@@ -644,7 +642,7 @@ export default {
     search() {
       this.pageNum = 1;
       this.isRender = false;
-      this.$nextTick(function() {
+      this.$nextTick(() => {
         this.isRender = true;
       });
       this.getListInfo();
@@ -658,7 +656,7 @@ export default {
       this.pageNum = 1;
       // this.pageSize = 5;
       this.isRender = false;
-      this.$nextTick(function() {
+      this.$nextTick(() => {
         this.isRender = true;
       });
       this.getListInfo();
@@ -668,30 +666,30 @@ export default {
       this.getStaffInfo();  
     },
     getStaffInfo() {
-      let querys = {
-        pageNum:this.staffPageNum,
-        pageSize:this.staffPageSize,
-        name:this.staffName,
-        phone:this.staffPhone,
-        email:this.staffEmail
+      const querys = {
+        pageNum: this.staffPageNum,
+        pageSize: this.staffPageSize,
+        name: this.staffName,
+        phone: this.staffPhone,
+        email: this.staffEmail
       }
       staffQuery({
-        type: "get",
+        type: 'get',
         params: querys
       }).then((res) => {
-        if(res.errCode === 0) {
+        if (res.errCode === 0) {
           this.staffData = res.data.list;
           this.staffPageNum = res.data.pageNum;
           this.staffPageSize = res.data.pageSize;
           this.staffTotal = res.data.total;
-          this.$nextTick(function() {
+          this.$nextTick(() => {
             this.selectStaffVisible = true;
           });
           this.staffName = '';
           this.staffPhone = '';
           this.staffEmail = '';
-        } else if(res.errCode === 10110002) {
-          this.$router.push(`/fe-staff/login`);
+        } else if (res.errCode === 10110002) {
+          this.$router.push('/fe-staff/login');
         }
       })  
     },
@@ -721,26 +719,26 @@ export default {
       this.selectStaffVisible = false;
     },
     submitStaffInfo() {
-      if(this.addStaffData.name === '' || this.addStaffData.name === undefined) {
-        this.$message({message: "员工姓名不能为空，请重新填写", duration: 3000});
-      } else if(!/^1[34578]\d{9}$/.test(this.addStaffData.phone)) {
-        this.$message({message: "填写手机号格式有误，请重新填写", duration: 3000});
-      } else if(!/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(this.addStaffData.email)) {
-        this.$message({message: "填写的邮箱格式有误，请重新填写", duration: 3000});
+      if (this.addStaffData.name === '' || this.addStaffData.name === undefined) {
+        this.$message({ message: '员工姓名不能为空，请重新填写', duration: 3000 });
+      } else if (!/^1[34578]\d{9}$/.test(this.addStaffData.phone)) {
+        this.$message({ message: '填写手机号格式有误，请重新填写', duration: 3000 });
+      } else if (!/^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/.test(this.addStaffData.email)) {
+        this.$message({ message: '填写的邮箱格式有误，请重新填写', duration: 3000 });
       } else {
         addStaffInfo({
-          type: "POST",
+          type: 'POST',
           params: {
             ...this.addStaffData, 
-            gender:this.gender
+            gender: this.gender
           }
         }).then((res) => {
-          if(res.errCode === 0) {
+          if (res.errCode === 0) {
             this.closeAddStaff();
-            this.$message({message: "添加员工信息成功", duration: 3000});
+            this.$message({ message: '添加员工信息成功', duration: 3000 });
             this.modifyStaffInfo();
-          } else if(res.errCode === 10110002) {
-            this.$router.push(`/fe-staff/login`);
+          } else if (res.errCode === 10110002) {
+            this.$router.push('/fe-staff/login');
           }
         })
       }

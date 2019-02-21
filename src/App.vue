@@ -6,6 +6,7 @@
 
 <script>
 import 'normalize.css';
+
 export default {
   name: 'app',
   data() {
