@@ -19,12 +19,15 @@
             <span class="module">模块</span>
             <span class="control">权限</span>
         </div>
-        <div class="checkout" v-for="item in checkoutList">
+        <div class="checkout" v-for="item in checkoutList" :key="item.moduleName">
             <div class="name">{{ item.moduleName }}</div>
             <el-checkbox-group 
                 v-model="ownPermissionList"
                 :min="1">
-                <el-checkbox v-for="opt in item.checkoutOptions" :label="opt.label" :key="opt.value">{{opt.label}}</el-checkbox>
+                <el-checkbox 
+                    v-for="opt in item.checkoutOptions" 
+                    :label="opt.label" 
+                    :key="opt.value">{{opt.label}}</el-checkbox>
             </el-checkbox-group> 
         </div>
         <el-button type="primary" v-show="permissionUpdate" @click="preserve">保存</el-button>
@@ -51,7 +54,12 @@
                     <el-input placeholder="请输入名称" v-model="curItem.permissionName"></el-input>
                 </el-form-item>
                 <el-form-item label="权限说明：" prop="permissionDesc">
-                    <el-input type="textarea" placeholder="请输入该权限的说明，便于其他人理解" :rows="3" v-model="curItem.permissionDesc"></el-input>
+                    <el-input 
+                        type="textarea" 
+                        placeholder="请输入该权限的说明，便于其他人理解" 
+                        :rows="3" 
+                        v-model="curItem.permissionDesc">
+                    </el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -64,8 +72,11 @@
 
 
 <script>
-import { getModuleAllName, getRoleDetails, createPower, modifyPower } from '@/services/authority.js';
-import Cookie from "js-cookie";
+import { 
+    getRoleDetails, 
+    createPower, 
+    modifyPower 
+} from '@/services/authority';
 import { mapState } from 'vuex';
 
 export default {
@@ -78,20 +89,20 @@ export default {
             ownPermissionList: [],
             dialogFormVisible: false,
             curItem: {
-                permissionName:'',
-                permissionDesc:'',
-                permissionCode:'',
-                moduleCode:''
+                permissionName: '',
+                permissionDesc: '',
+                permissionCode: '',
+                moduleCode: ''
             },
-            roleCode:'',
+            roleCode: '',
             addLoading: false,
             labelPosition: 'right'
         }
     },
     computed: {
         ...mapState([
-            "permissionAdd",
-            "permissionUpdate"
+            'permissionAdd',
+            'permissionUpdate'
         ])
     }, 
     created() {
@@ -99,26 +110,26 @@ export default {
     },
     methods: {
         getAllInfo() {
-            let regex = /\=/g;
-            let id = window.location.search.slice(1).replace(regex, " ").split(" ")[1];
+            const regex = /=/g;
+            const id = window.location.search.slice(1).replace(regex, ' ').split(' ')[1];
             this.id = id;
             getRoleDetails({
               type: 'get',
-              params: {id,}
+              params: { id, }
             }).then((res) => {
-              if(res.errCode === 0) {
+              if (res.errCode === 0) {
                 this.roleName = res.data.role.roleName;
                 this.roleCode = res.data.role.roleCode;
                 const checkoutList = res.data.permissionList.reduce((result, item) => {
-                    let resItem = {};
-                    resItem["moduleName"] = item.moduleName;
-                    resItem["checkoutOptions"] = item.modulePermissionList.reduce((last, item, index) => {
-                        let lastItem = {};
-                        lastItem["label"] = item.permissionName;
-                        if(res.data.ownerPermissionIdList.indexOf(item.id) !== -1) {
-                           this.ownPermissionList.push(item.permissionName); 
+                    const resItem = {};
+                    resItem.moduleName = item.moduleName;
+                    resItem.checkoutOptions = item.modulePermissionList.reduce((last, val) => {
+                        const lastItem = {};
+                        lastItem.label = val.permissionName;
+                        if (res.data.ownerPermissionIdList.indexOf(val.id) !== -1) {
+                           this.ownPermissionList.push(val.permissionName); 
                         }
-                        lastItem["value"] = item.id;
+                        lastItem.value = val.id;
                         last.push(lastItem);
                         return last;
                     }, []);
@@ -126,16 +137,18 @@ export default {
                     return result;
                 }, []);
                 this.checkoutList = checkoutList;
-              } else if( res.errCode === 10110002 ) {
-                  this.$router.push(`/fe-staff/login`);
+              } else if (res.errCode === 10110002) {
+                  this.$router.push('/fe-staff/login');
               } 
             })
         },
         preserve() {
-            let ownPermissionIdList = [];
-            for(let i = 0; i < this.checkoutList.length; i++) {
-                for(let j = 0; j < this.checkoutList[i].checkoutOptions.length; j++) {
-                   if(this.ownPermissionList.indexOf(this.checkoutList[i].checkoutOptions[j].label) != -1) {
+            const ownPermissionIdList = [];
+            for (let i = 0; i < this.checkoutList.length; i += 1) {
+                for (let j = 0; j < this.checkoutList[i].checkoutOptions.length; j += 1) {
+                   if (this.ownPermissionList.indexOf(
+                    this.checkoutList[i].checkoutOptions[j].label
+                    ) !== -1) {
                         ownPermissionIdList.push(this.checkoutList[i].checkoutOptions[j].value)
                     } 
                 }  
@@ -143,17 +156,17 @@ export default {
             modifyPower({
                 type: 'put',
                 params: {
-                    "roleName": this.roleName,
-                    "roleCode": this.roleCode,
-                    "userId": 1,
-                    "permissionIds": ownPermissionIdList.join(','),
-                    "id": this.id
+                    roleName: this.roleName,
+                    roleCode: this.roleCode,
+                    userId: 1,
+                    permissionIds: ownPermissionIdList.join(','),
+                    id: this.id
                 }
             }).then((res) => {
-                if(res.errCode === 0) {
-                    this.$message({message: "保存信息成功", duration: 3000});
-                } else if(res.errCode === 10110002) {
-                    this.$router.push(`/fe-staff/login`);
+                if (res.errCode === 0) {
+                    this.$message({ message: '保存信息成功', duration: 3000 });
+                } else if (res.errCode === 10110002) {
+                    this.$router.push('/fe-staff/login');
                 }
             })
         },      
@@ -165,13 +178,13 @@ export default {
         },
         onSubmit() {
             createPower({
-                type: "post",
+                type: 'post',
                 params: { ...this.curItem, userId: 1 }
             }).then((res) => {
-                if(res.errCode === 0) {
-                    this.$message({message: "创建新权限成功", duration: 3000});
-                } else if(res.errCode === 10110002) {
-                    this.$message({message: "创建新权限成功", duration: 3000}); 
+                if (res.errCode === 0) {
+                    this.$message({ message: '创建新权限成功', duration: 3000 });
+                } else if (res.errCode === 10110002) {
+                    this.$message({ message: '创建新权限成功', duration: 3000 }); 
                 }
             })
             this.dialogFormVisible = false;

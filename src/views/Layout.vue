@@ -1,47 +1,49 @@
 <template>
-    <div class="layout" v-if="hasPower" >
-        <div class="aside">
-            <div class="menu">
-                <div v-show="powerUser"
-                    :class="{ highlight:changeRed == 1 }"
-                    @click="change(1)">
-                    <router-link to="/fe-staff/power">成员管理</router-link>
-                </div>
-                <div v-show="powerRole"
-                    :class="{ highlight:changeRed == 2 }"
-                    @click="change(2)">
-                    <router-link to="/fe-staff/control">角色管理</router-link>
+    <div class="layout-wrapper">
+        <div class="layout" v-if="hasPower" >
+            <div class="aside">
+                <div class="menu">
+                    <div v-show="powerUser"
+                        :class="{ highlight:changeRed == 1 }"
+                        @click="change(1)">
+                        <router-link to="/fe-staff/power">成员管理</router-link>
+                    </div>
+                    <div v-show="powerRole"
+                        :class="{ highlight:changeRed == 2 }"
+                        @click="change(2)">
+                        <router-link to="/fe-staff/control">角色管理</router-link>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="main">
-            <div class="header">
-               <el-popover 
-                class="nickname" 
-                placement="bottom"
-                width="200"
-                trigger="click">
-                <p @click="logOut" class="logout">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-log-out"></use>
-                    </svg>
-                    退出登录
-                </p>
-                <el-button slot="reference">{{nickname ? nickname : ''}}</el-button>
-               </el-popover>
-            </div>
-            <div class="body">
-                <router-view></router-view>
+            <div class="main">
+                <div class="header">
+                   <el-popover 
+                    class="nickname" 
+                    placement="bottom"
+                    width="200"
+                    trigger="click">
+                    <p @click="logOut" class="logout">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-log-out"></use>
+                        </svg>
+                        退出登录
+                    </p>
+                    <el-button slot="reference">{{nickname ? nickname : ''}}</el-button>
+                   </el-popover>
+                </div>
+                <div class="body">
+                    <router-view></router-view>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { getUserInfo } from '@/services/login.js';
+import { getUserInfo } from '@/services/login';
 import { mapState, mapActions } from 'vuex';
-import Cookie from "js-cookie";
-import '../assets/iconfont.js';
+import Cookie from 'js-cookie';
+import '../assets/iconfont';
 
 export default {
     name: 'Power',
@@ -53,8 +55,8 @@ export default {
     data() {
         return {
             list: [
-                {'link': '/control', 'name': '成员管理'},
-                {'link': '/power', 'name': "角色管理"}
+                { link: '/control', name: '成员管理' },
+                { link: '/power', name: '角色管理' }
             ],
             changeRed: -1,
             nickname: Cookie('staffNickname'),
@@ -81,22 +83,22 @@ export default {
         getUserData() {
             getUserInfo({
                 type: 'get',
-                params: {userId: Cookie("staffUserId"), staffId: Cookie("staffId"), token: Cookie("staffToken")}
+                params: { userId: Cookie('staffUserId'), staffId: Cookie('staffId'), token: Cookie('staffToken') }
             }).then((res) => {
-                if(res.errCode === 0) {
+                if (res.errCode === 0) {
                     this.savePower(res.data.permissionCodeList);
-                    this.powerUser = res&&res.data&&res.data.permissionCodeList.indexOf("user:menu") !== -1;
-                    this.powerRole = res&&res.data&&res.data.permissionCodeList.indexOf("role:menu") !== -1; 
-                    if(res.data && 
-                        res.data.permissionCodeList.indexOf("user:menu") !== -1 || 
-                        res.data.permissionCodeList.indexOf("role:menu") !== -1) {
+                    this.powerUser = res&&res.data&&res.data.permissionCodeList.indexOf('user:menu') !== -1;
+                    this.powerRole = res&&res.data&&res.data.permissionCodeList.indexOf('role:menu') !== -1; 
+                    if (res.data 
+                     && res.data.permissionCodeList.indexOf('user:menu') !== -1
+                     || res.data.permissionCodeList.indexOf('role:menu') !== -1) {
                          this.hasPower = true;
-                    }  else {
+                    } else {
                          this.$router.push('/fe-staff/login');
-                         this.$message({message: "抱歉你没有权限登录进去查看页面", duration: 5000});
+                         this.$message({ message: '抱歉你没有权限登录进去查看页面', duration: 5000 });
                          this.hasPower = false;
                     }
-                } else if(res.errCode === 10110002) {
+                } else if (res.errCode === 10110002) {
                     this.$router.push('/fe-staff/login');
                 }
             }) 
@@ -108,7 +110,7 @@ export default {
             Cookie.remove('staffId');
             Cookie.remove('staffToken');
             Cookie.remove('staffNickname');
-            Cookie.remove("staffUserId");
+            Cookie.remove('staffUserId');
             this.$router.push('/fe-staff/login')
         }
     }
@@ -143,7 +145,7 @@ export default {
         background-color: #1f2d3d;
     }
     html,body,#app {
-        height: 100%;
+        // height: 100%;
     }
     .aside {
         background-color: rgb(48, 65, 86);
@@ -170,18 +172,18 @@ export default {
         text-decoration: none;
         color: rgb(64, 158, 255);
     }
+    .layout-wrapper {
+      background-color: #eee;  
+    }
     .layout {
         display: flex;
         height: 100%;
         background-color: #eee;
-        min-height: max-content;
-        min-height: -moz-max-content;
+        min-height: 100vh;
+        // min-height: -moz-max-content;
     }
 .body {
     margin-right: 100px;
     margin-left: 40px;
 }
 </style>
-
-
-

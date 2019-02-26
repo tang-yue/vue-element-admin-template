@@ -7,18 +7,14 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((req) => {
-  req.headers.authorization = true ? Cookie('staffToken') : null;
-  // req.headers['x-adtag'] = localStorage.getItem('adtag') ? localStorage.getItem('adtag') : null;
+  req.headers.authorization = Cookie('staffToken');
   return req;
-}, (err) => Promise.reject(err));
+}, err => Promise.reject(err));
 
-api.interceptors.response.use((res) => {
-  if (res.status === 401) {
-    return res;
-  } else {
-    return res;
-  }
-}, (err) => Promise.reject(err));
+api.interceptors.response.use(
+  res => res,
+  err => Promise.reject(err)
+);
 
 export function request(url, options) {
   const opt = options || {};
@@ -29,18 +25,11 @@ export function request(url, options) {
         data: opt.params || {}
       }).then((res) => {
         if (res) {
-          if (res && res.data || res) {
             resolve(res.data);
-          } else {
-            reject(res);
-          }
-        } else {
-          return res;
-        }
+        } 
+        return res;
       })
-      .catch((err) => {
-        reject(err);
-      });
+      .catch((err) => { reject(err) });
   });
 }
 

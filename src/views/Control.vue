@@ -74,8 +74,11 @@
 </template>
 
 <script>
-import { roleQuery, createRole, deleteRole, getRoleDetails } from '@/services/role.js';
-import Cookie from "js-cookie";
+import { 
+  roleQuery, 
+  createRole, 
+  deleteRole
+} from '@/services/role';
 import { mapState } from 'vuex';
 
 export default {
@@ -88,7 +91,7 @@ export default {
       pageNum: 1,
       total: 0,
       loading: true,
-      labelPosition: "right",
+      labelPosition: 'right',
       dialogFormVisible: false,
       curItem: {},
       addLoading: false,
@@ -107,11 +110,11 @@ export default {
   created() {
  // this.$route的用法
  // 生命周期函数，编译模板前使用
-  this.getListInfo({});
+  this.getListInfo();
   },
   methods: {
-    getListInfo(obj) {
-      let querysUser = {
+    getListInfo() {
+      const querysUser = {
           userId: 3,
           pageNum: this.pageNum,
           pageSize: this.pageSize
@@ -120,14 +123,14 @@ export default {
           type: 'get',
           params: querysUser,
       }).then((res) => {
-         if(res.errCode === 0) {
+         if (res.errCode === 0) {
            this.tableData = res.data.list;
            this.pageNum = res.data.pageNum;
            this.pageSize = res.data.pageSize;
            this.total = res.data.total;
            this.loading = false;
-         } else if(res.errCode === 10110002) {
-            this.$router.push(`/fe-staff/login`);
+         } else if (res.errCode === 10110002) {
+            this.$router.push('/fe-staff/login');
          }
       })
     },
@@ -145,25 +148,25 @@ export default {
     handleDelete(index, row) {
       deleteRole({
         type: 'delete',
-        params:{userId: 1, id: row.id}
+        params: { userId: 1, id: row.id }
       }).then((res) => {
-        if(res.errCode === 0) {
-          this.$message({message: '删除角色成功', duration: 3000})
-        } else if(res.errCode === 10110002 ) {
-          this.$router.push(`/fe-staff/login`);
+        if (res.errCode === 0) {
+          this.$message({ message: '删除角色成功', duration: 3000 })
+        } else if (res.errCode === 10110002) {
+          this.$router.push('/fe-staff/login');
         }
       })
-      this.getListInfo({});
+      this.getListInfo();
     },
     onSubmit() {
       createRole({
         type: 'post',
-        params:{userId: 1, ...this.curItem}
+        params: { userId: 1, ...this.curItem }
       }).then((res) => {
-        if(res.errCode === 0) {
-          this.$message({message: "添加角色成功", duration: 3000});
-        } else if(res.errCode === 10110002) {
-          this.$router.push(`/fe-staff/login`);
+        if (res.errCode === 0) {
+          this.$message({ message: '添加角色成功', duration: 3000 });
+        } else if (res.errCode === 10110002) {
+          this.$router.push('/fe-staff/login');
         }
       })
       this.dialogFormVisible = false;
