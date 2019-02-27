@@ -50,7 +50,7 @@
        <el-dialog
           title="添加"
           class="dialog"
-          width="20%"
+          width="40%"
           :visible.sync="dialogFormVisible"
           :before-close="handleClose">
           <el-form
