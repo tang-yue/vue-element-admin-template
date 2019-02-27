@@ -69,10 +69,12 @@ export default {
 
     },
     created() {
-      if (window.location.pathname.split('/')[2] === 'power') {
-        this.changeRed = 1;
-      } else {
+      if (window.location.pathname.split('/')[2] === 'control') {
         this.changeRed = 2;
+        this.$router.push('/fe-staff/control');
+      } else {
+        this.changeRed = 1;
+        this.$router.push('/fe-staff/power');
       }
       this.getUserData();
     },
@@ -123,6 +125,19 @@ export default {
 </script>
 
 <style scoped>
+
+.layout-wrapper {
+  background-color: #eee;  
+}
+.layout {
+    display: flex;
+    height: 100%;
+    background-color: #eee;
+    min-height: 100vh;
+}
+.body {
+    margin: 20px 100px 0 40px;
+}
 .header {
     background-color: #fff;
     height: 70px;
@@ -168,18 +183,5 @@ export default {
 }
 .menu div:hover {
    background-color: #001528; 
-}
-.layout-wrapper {
-  background-color: #eee;  
-}
-.layout {
-    display: flex;
-    height: 100%;
-    background-color: #eee;
-    min-height: 100vh;
-}
-.body {
-    margin-right: 100px;
-    margin-left: 40px;
 }
 </style>

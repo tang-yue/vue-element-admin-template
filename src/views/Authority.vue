@@ -226,7 +226,7 @@ export default {
     flex: 1;
 }
 .authority {
-    padding: 0 200px 40px 40px;
+    padding: 0 0 40px 0;
 }
 .flex {
     display: flex;

@@ -1,6 +1,6 @@
 <template>
   <div class="power">
-    <h2>用户</h2>
+    <h2>成员管理</h2>
     <div class="search">
       <div class="item-input"> 
         <span>按账号id查询：</span> 
@@ -63,8 +63,7 @@
     <el-table
       v-loading="loading"
       :data="tableData"
-      stripe
-      style="width: 100%">
+      stripe>
       <el-table-column
         prop="id"
         label="id"
@@ -173,12 +172,11 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取消</el-button>
-        <el-button type="primary" :loading="addLoading" @click="onSubmit">确定</el-button>
+        <el-button type="primary" @click="onSubmit">确定</el-button>
       </span>
       <div style="margin-left: 20px" v-show="dialogType">账号历史使用记录</div>
       <el-table
         v-show="dialogType"
-        v-loading="loading"
         :data="accountHistory"
         stripe
         style="width: 90%; margin-left: 20px">
@@ -251,7 +249,7 @@
             </el-input>
           </div>
         </div>
-        <div style="display:flex; margin: 15px 0">
+        <div style="display:flex; margin: 15px 0;">
           <div class="staffEmail">
             <span>员工邮箱：</span>
             <el-input
@@ -268,7 +266,7 @@
           </el-button>
         </div>
       <el-table
-        v-loading="loading"
+        v-loading="staffLoading"
         :data="staffData"
         stripe
         border
@@ -417,6 +415,7 @@ export default {
       pageNum: 1,
       total: 0,
       loading: true,
+      staffLoading: true,
       labelPosition: 'right',
       formLabelAlign: {
         name: '',
@@ -424,7 +423,6 @@ export default {
         type: ''
       },
       dialogFormVisible: false,
-      addLoading: false,
       curItem: {},
       allRoleList: [],
       roleList: [],
@@ -433,11 +431,11 @@ export default {
   },
   created() {
    this.getListInfo(true);
+   console.log(this, 'print this');
   },
   components: {
   },
   methods: {
-
     isUse(index, row) {
       let deleteStatus = 1;
       if (row.deleteStatus === '1') {
@@ -617,13 +615,16 @@ export default {
     },
     handleSizeChange(val) {
       this.pageSize = val;
+      this.loading = true;
       this.getListInfo();
     },
     handleCurrentChange(val) {
       this.pageNum = val;
+      this.loading = true;
       this.getListInfo();
     },
     handleCurrentChangeStaff(val) {
+      this.staffLoading = true;
       this.staffPageNum = val;
       this.getStaffInfo();
     },
@@ -686,6 +687,7 @@ export default {
           this.staffName = '';
           this.staffPhone = '';
           this.staffEmail = '';
+          this.staffLoading = false;
         } else if (res.errCode === 10110002) {
           this.$router.push('/fe-staff/login');
         }
@@ -770,10 +772,10 @@ export default {
   align-items: baseline;
 }
 .staff {
-  width: 400px;
+  width: 50%;
 }
 .staffEmail {
-  width: 340px;
+  width: 50%;
 }
 .el-input {
   width: 60%;

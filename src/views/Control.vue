@@ -1,6 +1,6 @@
 <template>
     <div class="power">
-      <h2>角色</h2>
+      <h2>角色管理</h2>
       <div class="createRole" v-show="roleAdd">
         <el-button 
           type="primary"
@@ -8,7 +8,6 @@
           @click="addRole"
           >+创建角色
         </el-button>
-        <span>共{{ total }}个角色</span>
       </div>
       <el-table
         v-loading="loading"
@@ -22,11 +21,11 @@
         </el-table-column>
         <el-table-column
           prop="memberName"
-          label="角色成员"
-          width="650">
+          label="角色成员">
         </el-table-column>
         <el-table-column
-          label="管理">
+          label="管理"
+          width="200">
           <template slot-scope="scope">
             <el-button v-show="permissionMenu"
               size="mini"
@@ -67,7 +66,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
               <el-button @click="dialogFormVisible = false">取消</el-button>
-              <el-button type="primary" :loading="addLoading" @click="onSubmit">确定</el-button>
+              <el-button type="primary" @click="onSubmit">确定</el-button>
             </span> 
         </el-dialog>
     </div>
@@ -93,8 +92,7 @@ export default {
       loading: true,
       labelPosition: 'right',
       dialogFormVisible: false,
-      curItem: {},
-      addLoading: false,
+      curItem: {}
     }
   },
   computed: {
@@ -136,9 +134,11 @@ export default {
     },
     handleSizeChange(val) {
       this.pageSize = val;
+      this.loading = true;
       this.getListInfo();
     },
     handleCurrentChange(val) {
+      this.loading = true;
       this.pageNum = val;
       this.getListInfo();
     },
