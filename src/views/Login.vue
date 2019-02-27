@@ -214,13 +214,13 @@ input {
   color: #f56c6c;
 }
 .space {
-  height: 18px;
+  height: 21.8px;
 }
 .submit {
   margin-bottom: 20px;
   cursor: pointer;
   padding-left: 0;
-  width: 108%;
+  width: 100%;
   color: #fff;
   background-color: #409eff;
   border-color: #409eff;
@@ -269,8 +269,9 @@ h3 {
   background-color: #409eff;
   border-color: #409eff;
   border-radius: 4px;
-  margin: 0 0 0 310px;
-  padding-left: 0;
+  // margin: 0 0 0 300px;
+  // padding-left: 0;
+  float: right;
 }
 .backLogin {
   margin-top: 20px;

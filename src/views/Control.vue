@@ -18,12 +18,12 @@
         <el-table-column
           prop="roleName"
           label="角色名称"
-          width="300">
+          width="100">
         </el-table-column>
         <el-table-column
           prop="memberName"
           label="角色成员"
-          width="450">
+          width="650">
         </el-table-column>
         <el-table-column
           label="管理">

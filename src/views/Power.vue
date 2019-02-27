@@ -64,7 +64,7 @@
       v-loading="loading"
       :data="tableData"
       stripe
-      style="width: 100%">
+      style="width: 80%">
       <el-table-column
         prop="id"
         label="id"
@@ -78,8 +78,7 @@
       </el-table-column>
       <el-table-column
         prop="username"
-        label="对应账号"
-        width="300">
+        label="对应账号">
       </el-table-column>
       <el-table-column
         prop="roleName"
@@ -185,8 +184,7 @@
         style="width: 90%; margin-left: 20px">
         <el-table-column
           prop="createTime"
-          label="时间"
-          width="200">
+          label="时间">
           <template slot-scope="scope">
             <span>{{ handleMoment(scope.row.createTime) }}</span>
           </template>
@@ -232,34 +230,37 @@
     <el-dialog
       title="选择员工"
       class="dialog"
-      style="width: 80%"
       v-if="selectStaffVisible"
       :visible.sync="selectStaffVisible"
       :before-close="closeSelectStaff">
-        <span>员工姓名：</span> 
-        <el-input
-          class="search-staff"
-          size="small"
-          placeholder="请输入员工姓名"
-          v-model="staffName">
-        </el-input>
-        <span style="margin-left: 180px">员工手机号：</span>
-        <el-input
-          class="search-staff"
-          size="small"
-          placeholder="请输入员工手机号"
-          v-model="staffPhone">
-        </el-input>
-        <div style="display:flex; margin:15px 0 15px 0">
-          <span style="display:block">员工邮箱：</span>
-          <el-input
-            size="small"
-            class="search-staff"
-            placeholder="请输入员工邮箱"
-            v-model="staffEmail">
-          </el-input>
+        <div style="display: flex; justifyContent: space-between">
+          <div class="staff">
+            <span>员工姓名：</span> 
+            <el-input
+              size="small"
+              placeholder="请输入员工姓名"
+              v-model="staffName">
+            </el-input>
+          </div>
+          <div class="staff">
+            <span>员工手机号：</span>
+            <el-input
+              size="small"
+              placeholder="请输入员工手机号"
+              v-model="staffPhone">
+            </el-input>
+          </div>
+        </div>
+        <div style="display:flex; margin: 15px 0">
+          <div class="staffEmail">
+            <span>员工邮箱：</span>
+            <el-input
+              size="small"
+              placeholder="请输入员工邮箱"
+              v-model="staffEmail">
+            </el-input>
+          </div>
           <el-button
-            style="margin-left: 180px"
             type="primary"
             size="mini"
             @click="searchStaff">
@@ -268,34 +269,29 @@
         </div>
       <el-table
         v-loading="loading"
-       :data="staffData"
+        :data="staffData"
         stripe
         border
         style="width: 100%; margin-bottom: 10px"
         >
         <el-table-column
           prop="id"
-          label="id"
-          width="100">
+          label="id">
         </el-table-column>
         <el-table-column
           prop="name"
-          label="员工姓名"
-          width="125">
+          label="员工姓名">
         </el-table-column>
         <el-table-column
           prop="phone"
-          label="员工手机号"
-          width="155">
+          label="员工手机号">
         </el-table-column>
         <el-table-column
           prop="email"
-          label="员工邮箱"
-          width="230">
+          label="员工邮箱">
         </el-table-column>
         <el-table-column
-          label="操作"
-          width="115">
+          label="操作">
           <template slot-scope="scope">
             <el-button
               type="primary"
@@ -641,6 +637,7 @@ export default {
     },
     search() {
       this.pageNum = 1;
+      this.pageSize = 5;
       this.isRender = false;
       this.$nextTick(() => {
         this.isRender = true;
@@ -654,7 +651,7 @@ export default {
       this.hasStaff = null;
       this.accountStatus = null;
       this.pageNum = 1;
-      // this.pageSize = 5;
+      this.pageSize = 5;
       this.isRender = false;
       this.$nextTick(() => {
         this.isRender = true;
@@ -662,6 +659,7 @@ export default {
       this.getListInfo();
     },
     modifyStaffInfo() {
+      this.staffPageNum = 1;
       this.dialogFormVisible = false;
       this.getStaffInfo();  
     },
@@ -709,6 +707,7 @@ export default {
     },
     // 关闭添加员工信息弹窗
     closeAddStaff() {
+      this.modifyStaffInfo();
       this.addStaffVisible = false;
       this.selectStaffVisible = true;
     },
@@ -766,15 +765,18 @@ export default {
   margin-bottom: 20px; 
 }
 .item-input {
-  width: 35%;
+  width: 40%;
   display: flex;
   align-items: baseline;
 }
+.staff {
+  width: 400px;
+}
+.staffEmail {
+  width: 340px;
+}
 .el-input {
   width: 60%;
-}
-.search-staff {
-  width: 20%;
 }
 .moveRight {
   margin-left: 66px;
