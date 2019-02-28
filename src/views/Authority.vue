@@ -225,6 +225,10 @@ export default {
 .el-checkbox-group {
     flex: 1;
 }
+.el-checkbox {
+    margin-left: 0;
+    margin-right: 20px;
+}
 .authority {
     padding: 0 0 40px 0;
 }
