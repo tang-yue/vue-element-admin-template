@@ -6,12 +6,12 @@
                     <div v-show="powerUser"
                         :class="{ highlight:changeRed == 1 }"
                         @click="change(1)">
-                        <router-link to="/fe-staff/power">成员管理</router-link>
+                        成员管理
                     </div>
                     <div v-show="powerRole"
                         :class="{ highlight:changeRed == 2 }"
                         @click="change(2)">
-                        <router-link to="/fe-staff/control">角色管理</router-link>
+                        角色管理
                     </div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                     class="nickname" 
                     placement="bottom"
                     width="200"
-                    trigger="click">
+                    trigger="hover">
                     <p @click="logOut" class="logout">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-log-out"></use>
@@ -69,10 +69,12 @@ export default {
 
     },
     created() {
-      if (window.location.pathname.split('/')[2] === 'power') {
-        this.changeRed = 1;
-      } else {
+      if (window.location.pathname.split('/')[2] === 'control') {
         this.changeRed = 2;
+        this.$router.push('/fe-staff/control');
+      } else {
+        this.changeRed = 1;
+        this.$router.push('/fe-staff/power');
       }
       this.getUserData();
     },
@@ -105,6 +107,11 @@ export default {
         },
         change(index) {
             this.changeRed = String(index);
+            if (index === 1) {
+                this.$router.push('/fe-staff/power');
+            } else {
+                this.$router.push('/fe-staff/control');
+            }
         },
         logOut() {
             Cookie.remove('staffId');
@@ -118,6 +125,19 @@ export default {
 </script>
 
 <style scoped>
+
+.layout-wrapper {
+  background-color: #eee;  
+}
+.layout {
+    display: flex;
+    height: 100%;
+    background-color: #eee;
+    min-height: 100vh;
+}
+.body {
+    margin: 20px 100px 0 40px;
+}
 .header {
     background-color: #fff;
     height: 70px;
@@ -127,7 +147,7 @@ export default {
 .logout {
     cursor: pointer;
     text-align: center;
-    width: 100px;
+    width: 80px;
 }
 .icon {
    width: 1em; height: 1em;
@@ -138,52 +158,30 @@ export default {
 .nickname {
     float: right;
 }
-.nickname:hover {
-    background-color: rgba(48, 65, 86, 0.3);
-}
 .highlight {
         background-color: #1f2d3d;
     }
-    html,body,#app {
-        // height: 100%;
-    }
-    .aside {
-        background-color: rgb(48, 65, 86);
-        width: 250px;
-        min-height: max-content;
-        min-height: -moz-max-content;
-    }
-    .main {
-        flex: 1;
-    }
-    .menu {
-        margin-top: 250px;
-        font-size: 26px;
-    }
-    .menu div {
-        text-indent: 40px;
-        margin: 0 0 30px 0;
-        padding: 10px 0 15px 0;    
-    }
-    .menu div:hover {
-        background-color: #001528;
-    }
-    .menu div a {
-        text-decoration: none;
-        color: rgb(64, 158, 255);
-    }
-    .layout-wrapper {
-      background-color: #eee;  
-    }
-    .layout {
-        display: flex;
-        height: 100%;
-        background-color: #eee;
-        min-height: 100vh;
-        // min-height: -moz-max-content;
-    }
-.body {
-    margin-right: 100px;
-    margin-left: 40px;
+.aside {
+    background-color: rgb(48, 65, 86);
+    width: 250px;
+    min-height: max-content;
+    min-height: -moz-max-content;
+}
+.main {
+    flex: 1;
+}
+.menu {
+    margin-top: 250px;
+    font-size: 26px;
+}
+.menu div {
+    cursor: pointer;
+    text-indent: 40px;
+    margin: 0 0 30px 0;
+    padding: 10px 0 15px 0;
+    color: rgb(64, 158, 255);  
+}
+.menu div:hover {
+   background-color: #001528; 
 }
 </style>

@@ -39,7 +39,7 @@
             <el-form
                 ref="ruleForm"
                 :label-position="labelPosition" 
-                label-width="100px" 
+                label-width="130px" 
                 :model="curItem">
                 <el-form-item label="所属模块：" prop="moduleCode">
                     <el-select v-model="curItem.moduleCode" placeholder="请选择模块系统">
@@ -217,14 +217,20 @@ export default {
    margin: 20px 0 20px 0;
 }
 .name {
-    width: 200px;
-    margin-right: 50px;
+    flex: 0.1;
 }
 .el-checkbox_label {
     line-height: 25px;
 }
+.el-checkbox-group {
+    flex: 1;
+}
+.el-checkbox {
+    margin-left: 0;
+    margin-right: 20px;
+}
 .authority {
-    padding: 0 200px 40px 40px;
+    padding: 0 0 40px 0;
 }
 .flex {
     display: flex;

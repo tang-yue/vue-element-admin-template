@@ -73,10 +73,10 @@
        <p class="warning" v-if="newPasswordWarning">请输入新密码</p>
        <p class="space" v-else></p>
       <p>
-        <input class="submitM" type="submit" value="保存" @click="preserve">
+        <input class="submit" type="submit" value="保存" @click="preserve">
       </p>
       <p>
-        <input class="modifyPassword backLogin" type="submit" value="返回登录" @click="backLogin">
+        <input class="modifyPassword" type="submit" value="返回登录" @click="backLogin">
       </p>
     </div>
   </div>
@@ -136,6 +136,7 @@
         this.username = '';
         this.password = '';
         this.passwordWarning = false;
+        this.usernameWarning = false;
       },
       preserve() {
         if (this.usernameM === '') {
@@ -178,8 +179,9 @@
       },
       backLogin() {
         this.login = true;
-        this.usernameWarning = false;
         this.passwordWarning = false;
+        this.usernameWarningM = false;
+        this.newPasswordWarning = false;
         this.usernameM = '';
         this.password = '';
         this.newPassword = '';
@@ -190,9 +192,8 @@
 
 <style scoped>
 html,body,#app {
-        height: 100%;
-    }
-
+    height: 100%;
+  }
 input {
   height: 40px;
   caret-color: #fff;
@@ -214,19 +215,18 @@ input {
   color: #f56c6c;
 }
 .space {
-  height: 18px;
+  height: 21.8px;
 }
 .submit {
   margin-bottom: 20px;
   cursor: pointer;
   padding-left: 0;
-  width: 108%;
+  width: 100%;
   color: #fff;
   background-color: #409eff;
   border-color: #409eff;
   border-radius: 4px;
 }
-
 input::placeholder {
   color: #fff;
 }
@@ -234,7 +234,7 @@ h3 {
   font-size: 26px;
   color: #fff;
   text-align: center;
-  margin-top: 0;
+  margin: 0 0 10px 0;
 }
 .login {
   height: 100%;
@@ -246,33 +246,14 @@ h3 {
   padding-top: 160px;
   margin-bottom: 30px;
 }
-
 .el-input-inner {
   width: 30%;
-}
-.el-button {
-  display: block;
-  padding: 10px 100px; 
-}
-.submitM {
-  cursor: pointer;
-  padding-left: 0;
-  margin-top: 20px;
-  text-align: center;
-  background-color: #409eff;
-  width: 108%;
 }
 .modifyPassword {
   cursor: pointer;
   width: 30%;
-  color: #fff;
   background-color: #409eff;
-  border-color: #409eff;
-  border-radius: 4px;
-  margin: 0 0 0 310px;
+  float: right;
   padding-left: 0;
-}
-.backLogin {
-  margin-top: 20px;
 }
 </style>

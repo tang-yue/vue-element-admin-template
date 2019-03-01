@@ -1,6 +1,6 @@
 <template>
   <div class="power">
-    <h2>用户</h2>
+    <h2>成员管理</h2>
     <div class="search">
       <div class="item-input"> 
         <span>按账号id查询：</span> 
@@ -63,8 +63,7 @@
     <el-table
       v-loading="loading"
       :data="tableData"
-      stripe
-      style="width: 100%">
+      stripe>
       <el-table-column
         prop="id"
         label="id"
@@ -78,8 +77,7 @@
       </el-table-column>
       <el-table-column
         prop="username"
-        label="对应账号"
-        width="300">
+        label="对应账号">
       </el-table-column>
       <el-table-column
         prop="roleName"
@@ -174,19 +172,17 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取消</el-button>
-        <el-button type="primary" :loading="addLoading" @click="onSubmit">确定</el-button>
+        <el-button type="primary" @click="onSubmit">确定</el-button>
       </span>
       <div style="margin-left: 20px" v-show="dialogType">账号历史使用记录</div>
       <el-table
         v-show="dialogType"
-        v-loading="loading"
         :data="accountHistory"
         stripe
         style="width: 90%; margin-left: 20px">
         <el-table-column
           prop="createTime"
-          label="时间"
-          width="200">
+          label="时间">
           <template slot-scope="scope">
             <span>{{ handleMoment(scope.row.createTime) }}</span>
           </template>
@@ -232,34 +228,37 @@
     <el-dialog
       title="选择员工"
       class="dialog"
-      style="width: 80%"
       v-if="selectStaffVisible"
       :visible.sync="selectStaffVisible"
       :before-close="closeSelectStaff">
-        <span>员工姓名：</span> 
-        <el-input
-          class="search-staff"
-          size="small"
-          placeholder="请输入员工姓名"
-          v-model="staffName">
-        </el-input>
-        <span style="margin-left: 180px">员工手机号：</span>
-        <el-input
-          class="search-staff"
-          size="small"
-          placeholder="请输入员工手机号"
-          v-model="staffPhone">
-        </el-input>
-        <div style="display:flex; margin:15px 0 15px 0">
-          <span style="display:block">员工邮箱：</span>
-          <el-input
-            size="small"
-            class="search-staff"
-            placeholder="请输入员工邮箱"
-            v-model="staffEmail">
-          </el-input>
+        <div style="display: flex; justifyContent: space-between">
+          <div class="staff">
+            <span>员工姓名：</span> 
+            <el-input
+              size="small"
+              placeholder="请输入员工姓名"
+              v-model="staffName">
+            </el-input>
+          </div>
+          <div class="staff">
+            <span>员工手机号：</span>
+            <el-input
+              size="small"
+              placeholder="请输入员工手机号"
+              v-model="staffPhone">
+            </el-input>
+          </div>
+        </div>
+        <div style="display:flex; margin: 15px 0;">
+          <div class="staffEmail">
+            <span>员工邮箱：</span>
+            <el-input
+              size="small"
+              placeholder="请输入员工邮箱"
+              v-model="staffEmail">
+            </el-input>
+          </div>
           <el-button
-            style="margin-left: 180px"
             type="primary"
             size="mini"
             @click="searchStaff">
@@ -267,35 +266,30 @@
           </el-button>
         </div>
       <el-table
-        v-loading="loading"
-       :data="staffData"
+        v-loading="staffLoading"
+        :data="staffData"
         stripe
         border
         style="width: 100%; margin-bottom: 10px"
         >
         <el-table-column
           prop="id"
-          label="id"
-          width="100">
+          label="id">
         </el-table-column>
         <el-table-column
           prop="name"
-          label="员工姓名"
-          width="125">
+          label="员工姓名">
         </el-table-column>
         <el-table-column
           prop="phone"
-          label="员工手机号"
-          width="155">
+          label="员工手机号">
         </el-table-column>
         <el-table-column
           prop="email"
-          label="员工邮箱"
-          width="230">
+          label="员工邮箱">
         </el-table-column>
         <el-table-column
-          label="操作"
-          width="115">
+          label="操作">
           <template slot-scope="scope">
             <el-button
               type="primary"
@@ -421,6 +415,7 @@ export default {
       pageNum: 1,
       total: 0,
       loading: true,
+      staffLoading: true,
       labelPosition: 'right',
       formLabelAlign: {
         name: '',
@@ -428,7 +423,6 @@ export default {
         type: ''
       },
       dialogFormVisible: false,
-      addLoading: false,
       curItem: {},
       allRoleList: [],
       roleList: [],
@@ -437,11 +431,11 @@ export default {
   },
   created() {
    this.getListInfo(true);
+   console.log(this, 'print this');
   },
   components: {
   },
   methods: {
-
     isUse(index, row) {
       let deleteStatus = 1;
       if (row.deleteStatus === '1') {
@@ -621,13 +615,16 @@ export default {
     },
     handleSizeChange(val) {
       this.pageSize = val;
+      this.loading = true;
       this.getListInfo();
     },
     handleCurrentChange(val) {
       this.pageNum = val;
+      this.loading = true;
       this.getListInfo();
     },
     handleCurrentChangeStaff(val) {
+      this.staffLoading = true;
       this.staffPageNum = val;
       this.getStaffInfo();
     },
@@ -641,6 +638,7 @@ export default {
     },
     search() {
       this.pageNum = 1;
+      this.pageSize = 5;
       this.isRender = false;
       this.$nextTick(() => {
         this.isRender = true;
@@ -654,7 +652,7 @@ export default {
       this.hasStaff = null;
       this.accountStatus = null;
       this.pageNum = 1;
-      // this.pageSize = 5;
+      this.pageSize = 5;
       this.isRender = false;
       this.$nextTick(() => {
         this.isRender = true;
@@ -662,6 +660,7 @@ export default {
       this.getListInfo();
     },
     modifyStaffInfo() {
+      this.staffPageNum = 1;
       this.dialogFormVisible = false;
       this.getStaffInfo();  
     },
@@ -688,6 +687,7 @@ export default {
           this.staffName = '';
           this.staffPhone = '';
           this.staffEmail = '';
+          this.staffLoading = false;
         } else if (res.errCode === 10110002) {
           this.$router.push('/fe-staff/login');
         }
@@ -709,6 +709,7 @@ export default {
     },
     // 关闭添加员工信息弹窗
     closeAddStaff() {
+      this.modifyStaffInfo();
       this.addStaffVisible = false;
       this.selectStaffVisible = true;
     },
@@ -766,15 +767,18 @@ export default {
   margin-bottom: 20px; 
 }
 .item-input {
-  width: 35%;
+  width: 40%;
   display: flex;
   align-items: baseline;
 }
+.staff {
+  width: 50%;
+}
+.staffEmail {
+  width: 50%;
+}
 .el-input {
   width: 60%;
-}
-.search-staff {
-  width: 20%;
 }
 .moveRight {
   margin-left: 66px;
