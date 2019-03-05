@@ -38,8 +38,6 @@ Update testing env:
 
 Update testing1 env:
   <<: *deploy_base
-  except: 
-  - /^release-.*$/  
   before_script:
     - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
   when: manual
@@ -51,8 +49,6 @@ Update testing1 env:
 
 Update testing2 env:
   <<: *deploy_base
-  except: 
-  - /^release-.*$/  
   before_script:
     - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
   when: manual
@@ -64,8 +60,6 @@ Update testing2 env:
 
 Update testing3 env:
   <<: *deploy_base
-  except: 
-  - /^release-.*$/  
   before_script:
     - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
   when: manual
@@ -77,8 +71,6 @@ Update testing3 env:
     
 Update testing4 env:
   <<: *deploy_base
-  except: 
-  - /^release-.*$/
   before_script:
     - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
   when: manual
@@ -90,8 +82,6 @@ Update testing4 env:
 
 Update testing5 env:
   <<: *deploy_base
-  except: 
-  - /^release-.*$/  
   before_script:
     - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
   when: manual
