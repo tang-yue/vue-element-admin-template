@@ -25,13 +25,12 @@ Build Docker Image:
 
 Update testing env:
   <<: *deploy_base
-  only:
-    - master
+
   before_script:
     - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
   when: manual
   variables:
-    KUBE_CLUSTER: bjo
+    KUBE_CLUSTER: bjt
     NAMESPACE: testing
     WORKLOAD: deploy/fe-staff
     CONTAINER: fe-staff
