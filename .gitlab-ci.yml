@@ -89,6 +89,43 @@ Update testing5 env:
     NAMESPACE: testing5
     WORKLOAD: deploy/fe-staff
     CONTAINER: fe-staff
+
+
+Update testing6 env:
+  <<: *deploy_base
+  before_script:
+    - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
+  when: manual
+  variables:
+    KUBE_CLUSTER: bjt
+    NAMESPACE: testing6
+    WORKLOAD: deploy/fe-staff
+    CONTAINER: fe-staff
+    
+
+Update testing7 env:
+  <<: *deploy_base
+  before_script:
+    - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
+  when: manual
+  variables:
+    KUBE_CLUSTER: bjt
+    NAMESPACE: testing7
+    WORKLOAD: deploy/fe-staff
+    CONTAINER: fe-staff
+
+
+Update testing8 env:
+  <<: *deploy_base
+  before_script:
+    - IMAGE=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA:0:7}
+  when: manual
+  variables:
+    KUBE_CLUSTER: bjt
+    NAMESPACE: testing8
+    WORKLOAD: deploy/fe-staff
+    CONTAINER: fe-staff    
+
     
  
 Update production env(k8sbj):
