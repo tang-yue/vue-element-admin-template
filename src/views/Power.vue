@@ -431,7 +431,6 @@ export default {
   },
   created() {
    this.getListInfo(true);
-   console.log(this, 'print this');
   },
   components: {
   },

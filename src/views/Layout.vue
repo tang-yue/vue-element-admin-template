@@ -72,9 +72,11 @@ export default {
       if (window.location.pathname.split('/')[2] === 'control') {
         this.changeRed = 2;
         this.$router.push('/fe-staff/control');
-      } else {
+      } else if (window.location.pathname.split('/')[2] === 'power') {
         this.changeRed = 1;
         this.$router.push('/fe-staff/power');
+      } else if (window.location.pathname.split('/')[2] === 'authority') {
+        this.changeRed = 2;
       }
       this.getUserData();
     },

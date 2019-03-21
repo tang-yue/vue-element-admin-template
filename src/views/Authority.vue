@@ -43,8 +43,12 @@
                 :model="curItem">
                 <el-form-item label="所属模块：" prop="moduleCode">
                     <el-select v-model="curItem.moduleCode" placeholder="请选择模块系统">
-                        <el-option label="账号系统" value="account"></el-option>
-                        <el-option label="市场系统" value="market"></el-option>
+                        <el-option
+                            v-for="v in allModuleName"
+                            :key="v.id" 
+                            :label="v.moduleName"
+                            :value="v.moduleCode">
+                        </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="权限码（英文）：" prop="permissionCode">
@@ -75,7 +79,8 @@
 import { 
     getRoleDetails, 
     createPower, 
-    modifyPower 
+    modifyPower,
+    getModuleAllName 
 } from '@/services/authority';
 import { mapState } from 'vuex';
 
@@ -88,6 +93,7 @@ export default {
             checkoutList: [],
             ownPermissionList: [],
             dialogFormVisible: false,
+            allModuleName: [],
             curItem: {
                 permissionName: '',
                 permissionDesc: '',
@@ -113,6 +119,16 @@ export default {
             const regex = /=/g;
             const id = window.location.search.slice(1).replace(regex, ' ').split(' ')[1];
             this.id = id;
+
+            getModuleAllName({
+               type: 'get',
+               params: {}
+            }).then((res) => {
+                if (res.errCode === 0) {
+                    this.allModuleName = res.data;
+                }
+            })
+
             getRoleDetails({
               type: 'get',
               params: { id, }
@@ -183,6 +199,7 @@ export default {
             }).then((res) => {
                 if (res.errCode === 0) {
                     this.$message({ message: '创建新权限成功', duration: 3000 });
+                    this.getAllInfo();
                 } else if (res.errCode === 10110002) {
                     this.$message({ message: '创建新权限成功', duration: 3000 }); 
                 }
