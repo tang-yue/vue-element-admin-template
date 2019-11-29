@@ -9,8 +9,8 @@ WORKDIR /project
 
 # 先只拷贝这两个文件，这样如果这两个文件没有更新，
 # yarn install 这一步将会被缓存
-COPY package.json  yarn.lock  /project/
-RUN yarn install
+COPY package.json  package-lock.json  /project/
+RUN npm install
 
 COPY . /project
 RUN npm run build
