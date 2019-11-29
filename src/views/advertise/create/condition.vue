@@ -7,7 +7,13 @@
 
 <script>
 export default {
-    name: 'AdvertiseCondition'
+    name: 'AdvertiseCondition',
+    created() {
+        console.log(this.$route.params, this.$route.query, 'this.$router')
+    },
+    methods: {
+        
+    }
 }
 </script>
 

@@ -18,7 +18,7 @@
                         <el-select v-model="planData.biz_type_id" placeholder="请选择">
                             <el-option v-for="item in allBizs" :key="item.id" :label="item.name" :value="item.id"></el-option>
                         </el-select>
-                        <el-button type="primary" style="margin-left: 20px">添加业务类型</el-button>
+                        <el-button type="primary" style="margin-left: 20px" @click="addBiz">添加业务类型</el-button>
                     </div>
                 </el-form-item>
                 <el-form-item label="广告名称" prop='name'>
@@ -27,9 +27,16 @@
             </el-form>
             <div style="width: 600px">
                 <div style="width: 135px; margin:0 auto;">
-                    <el-button type="primary" style="padding: 9px 50px">下一步</el-button>
+                    <el-button type="primary" style="padding: 9px 50px" @click="createPlan">下一步</el-button>
                 </div>
             </div>
+            <el-dialog title="添加业务类型" :visible.sync="dialogFormVisible">
+                <el-form ref="dataForm" :rules="bizRules" :model="bizData" label-position="left" label-width="100px">
+                    <el-form-item label="业务类型" prop="name">
+                        <el-input v-model="bizData.name" />
+                    </el-form-item>
+                </el-form>
+            </el-dialog>
         </div>
     </div>
 </template>
@@ -52,6 +59,9 @@ export default {
                 biz_type_id: null,
                 name: null
             },
+            bizData: {
+                name: null
+            },
             allClients: [],
             allPositions: [],
             allBizs: [],
@@ -60,7 +70,11 @@ export default {
                 ad_position_id: [{ required: true, message: '广告位置不能为空', trigger: 'change' }],
                 biz_type_id: [{ required: true, message: '业务类型', trigger: 'change' }],
                 name: [{ required: true, message: '广告名称', trigger: 'change' }]
-            }
+            },
+            bizRules: {
+                name: [{ required: true, message: '业务名称不能为空', trigger: 'change' }]
+            },
+            dialogFormVisible: false
         }
     },
     created() {
@@ -88,6 +102,22 @@ export default {
                     this.allBizs = res.data.data
                 }
             })
+        },
+        createPlan() {
+            createAdvertisePlan({
+                type: 'POST',
+                params: {...this.planData}
+            }).then((res) => {
+                if(res.data && res.data.errCode === 0) {
+                    this.$message.success('创建广告计划成功')
+                    this.$router.push({path: `/advertise/create/condition/${res.data.data.id}`})
+                } else {
+                    this.$message.success('创建广告计划失败')
+                }
+            })
+        },
+        addBiz() {
+            this.dialogFormVisible = true;
         }
     }
 }

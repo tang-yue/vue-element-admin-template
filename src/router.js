@@ -27,7 +27,7 @@ import InviteCashbackOrders from './views/Invite/InviteCashbackOrders/InviteCash
 // 广告后台/创建/编辑广告
 
 import AdvertisePlan from './views/advertise/create/plan'
-import AdvertiseCondition from './views/advertise/create/content/customerNews'
+import AdvertiseCondition from './views/advertise/create/condition'
 
 
 
@@ -210,7 +210,7 @@ export default new Router({
                         },
                         {
                             path: 'condition/:id',
-                            component: InviteCashbackOrders
+                            component: AdvertiseCondition
                         },
                         {
                             path: 'content/:id',
