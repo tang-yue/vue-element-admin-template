@@ -1,12 +1,13 @@
 <template>
-    <router-view></router-view>
+    <div class="title">
+          关注客服消息
+    </div>
 </template>
 
 
 <script>
-
 export default {
-    name: 'CommonInvite'
+    name: 'CustomerNews'
 }
 </script>
 

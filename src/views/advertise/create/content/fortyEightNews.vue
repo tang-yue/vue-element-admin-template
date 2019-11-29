@@ -1,12 +1,13 @@
 <template>
-    <router-view></router-view>
+    <div class="title">
+        关注48小时客服消息
+    </div>
 </template>
 
 
 <script>
-
 export default {
-    name: 'CommonInvite'
+    name: 'FortyEightNews'
 }
 </script>
 

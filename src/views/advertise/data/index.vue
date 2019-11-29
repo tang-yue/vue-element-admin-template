@@ -1,12 +1,13 @@
 <template>
-    <router-view></router-view>
+    <div class="title">
+        广告数据页
+    </div>
 </template>
 
 
 <script>
-
 export default {
-    name: 'CommonInvite'
+    name: 'AdvertiseData'
 }
 </script>
 

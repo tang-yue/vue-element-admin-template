@@ -1,12 +1,13 @@
 <template>
-    <router-view></router-view>
+    <div class="title">
+        设置广告条件
+    </div>
 </template>
 
 
 <script>
-
 export default {
-    name: 'CommonInvite'
+    name: 'AdvertiseCondition'
 }
 </script>
 

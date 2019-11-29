@@ -100,7 +100,7 @@
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
         
         <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-            <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+            <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;" size="small">
                 <el-form-item label="等级" prop="courseLevel">
                     <el-select v-model="temp.courseLevel" placeholder="Please select">
                         <el-option v-for="item in allLevels" :key="item" :label="item" :value="item" />     
@@ -115,7 +115,7 @@
                     </el-select>
                 </el-form-item>
                 <div style="display: flex; margin-bottom: 5px;">
-                    <span><span style="color: #F56C6C">* </span>分享icon：</span>
+                    <span><span style="color: #F56C6C">* </span>分享icon</span>
                     <img v-if="Boolean(temp.shareIcon || uploadImages.shareIcon)" :src="uploadImages['shareIcon'] ? uploadImages['shareIcon'] : temp.shareIcon" style="width: 40px" alt="shareIcon" />
                     <div v-if="Boolean(!temp.shareIcon && !uploadImages.shareIcon)" class="emptyImg"></div>
                     <span class="size">尺寸100*100</span>
@@ -125,7 +125,7 @@
                     <el-input v-model="temp.shareContent" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="Please input" />
                 </el-form-item>
                 <div style="display: flex; margin-bottom: 5px;">
-                    <span><span style="color: #F56C6C">* </span>分享页背景：</span>
+                    <span><span style="color: #F56C6C">* </span>分享页背景</span>
                     <img v-if="Boolean(temp.backgroundImg || uploadImages.backgroundImg)" :src="uploadImages['backgroundImg'] ? uploadImages['backgroundImg'] : temp.backgroundImg" style="width: 40px; height: 60px;" alt="shareIcon" />
                     <div v-if="Boolean(!temp.backgroundImg&&!uploadImages.backgroundImg)" class="emptyImg" style="height: 60px;"></div>
                     <span class="size">尺寸......</span>
@@ -135,7 +135,7 @@
                     <el-input v-model="temp.backgroundColor" />
                 </el-form-item>
                 <div style="display: flex; margin-bottom: 5px;">
-                    <span><span style="color: #F56C6C">* </span>动画文件：</span>
+                    <span><span style="color: #F56C6C">* </span>动画文件</span>
                     <div v-if="Boolean(temp.animationFile || uploadImages.animationFile)" class="marinClass">{{uploadImages['animationFile'] ? uploadImages['animationFile'].slice(-15) : temp.animationFile}}</div>
                     <div v-if="Boolean(!temp.animationFile&&!uploadImages.animationFile)" class="marginClass">请上传json文件</div>
                     <upload-img dirname="punchCard/punch" imgname="animationFile">上传文件</upload-img>
@@ -336,14 +336,15 @@ export default {
 .emptyImg {
     width: 40px; 
     height: 40px; 
+    margin-left: 40px;
     background-color: #aaa;
 }
 .size {
     margin-left: 100px; 
     font-size: 10px;
 }
-.marinClass {
-    margin-right: 80px;
+.marginClass {
+    margin: 0 100px 0 30px;
 }
 
 .title {

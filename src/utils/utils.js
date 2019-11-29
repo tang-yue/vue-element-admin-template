@@ -29,4 +29,5 @@ export function judgePower(arr, str) {
     
   export const commonConfig = {
     apiUrl: domainConfig(),
+    devApiUrl: "https://zt.dev.pipacoding.com"
   };

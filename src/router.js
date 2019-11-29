@@ -24,7 +24,11 @@ import InviteList from './views/Invite/InviteList/InviteList'
 import InviteTextList from './views/Invite/InviteTextList/InviteTextList'
 import InvitePoster from './views/Invite/InvitePoster/InvitePoster'
 import InviteCashbackOrders from './views/Invite/InviteCashbackOrders/InviteCashbackOrders'
-// 
+// 广告后台/创建/编辑广告
+
+import AdvertisePlan from './views/advertise/create/plan'
+import AdvertiseCondition from './views/advertise/create/content/customerNews'
+
 
 
 Vue.use(Router);
@@ -180,6 +184,111 @@ export default new Router({
                     meta: {
                         title: '返回订单',
                         menuPath: '/invite/cashbackOrders',
+                        powerCode: 'inviteList:view'
+                    }
+                }
+            ]
+        },
+        {
+            path: '/advertise',
+            name: '广告后台',
+            component: Layout,
+            children: [
+                {
+                    path: 'create',
+                    component: CommonInvite,
+                    redirect: '/advertise/create/plan/head',
+                    meta: {
+                        title: '广告创建',
+                        menuPath: '/advertise/create',
+                        powerCode: 'inviteList:view'
+                    },
+                    children: [
+                        {
+                            path: 'plan/:id',
+                            component: AdvertisePlan
+                        },
+                        {
+                            path: 'condition/:id',
+                            component: InviteCashbackOrders
+                        },
+                        {
+                            path: 'content/:id',
+                            component: CommonInvite,
+                            children: [
+                                {
+                                    path: 'fortyEightcustomerServiceNews',
+                                    component: InviteCashbackOrders
+                                },
+                                {
+                                    path: 'interactiveCustomerServiceMessages',
+                                    component: InviteCashbackOrders
+                                },
+                                {
+                                    path: 'customerServiceNews',
+                                    component: InviteCashbackOrders
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    path: 'list',
+                    component: CommonInvite,
+                    redirect: '/advertise/list/table',
+                    meta: {
+                        title: '广告管理',
+                        menuPath: '/advertise/list',
+                        powerCode: 'inviteList:view'
+                    },
+                    children: [
+                        {
+                            path: 'table',
+                            component: InviteCashbackOrders
+                        },
+                        {
+                            path: 'plan/:id',
+                            component: InviteCashbackOrders
+                        },
+                        {
+                            path: 'condition/:id',
+                            component: InviteCashbackOrders
+                        },
+                        {
+                            path: 'content/:id',
+                            component: CommonInvite,
+                            children: [
+                                {
+                                    path: 'fortyEightcustomerServiceNews',
+                                    component: InviteCashbackOrders
+                                },
+                                {
+                                    path: 'interactiveCustomerServiceMessages',
+                                    component: InviteCashbackOrders
+                                },
+                                {
+                                    path: 'customerServiceNews',
+                                    component: InviteCashbackOrders
+                                }
+                            ]
+                        }
+                    ]   
+                },
+                {
+                    path: 'materialList',
+                    component: InviteCashbackOrders,
+                    meta: {
+                        title: '广告素材管理',
+                        menuPath: '/advertise/materialList',
+                        powerCode: 'inviteList:view'
+                    }
+                },
+                {
+                    path: 'data',
+                    component: InviteCashbackOrders,
+                    meta: {
+                        title: '广告数据',
+                        menuPath: '/advertise/data',
                         powerCode: 'inviteList:view'
                     }
                 }

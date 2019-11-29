@@ -32,8 +32,8 @@ Update testing env:
   variables:
     KUBE_CLUSTER: bjt
     NAMESPACE: testing
-    WORKLOAD: deploy/fe-staff
-    CONTAINER: fe-staff
+    WORKLOAD: deploy/fe-user-growth
+    CONTAINER: fe-user-growth
 
 Update testing1 env:
   <<: *deploy_base
@@ -43,8 +43,8 @@ Update testing1 env:
   variables:
     KUBE_CLUSTER: bjt
     NAMESPACE: testing1
-    WORKLOAD: deploy/fe-staff
-    CONTAINER: fe-staff
+    WORKLOAD: deploy/fe-user-growth
+    CONTAINER: fe-user-growth
 
 Update testing2 env:
   <<: *deploy_base
@@ -54,8 +54,8 @@ Update testing2 env:
   variables:
     KUBE_CLUSTER: bjt
     NAMESPACE: testing2
-    WORKLOAD: deploy/fe-staff
-    CONTAINER: fe-staff    
+    WORKLOAD: deploy/fe-user-growth
+    CONTAINER: fe-user-growth    
 
 Update testing3 env:
   <<: *deploy_base
@@ -65,8 +65,8 @@ Update testing3 env:
   variables:
     KUBE_CLUSTER: bjt
     NAMESPACE: testing3
-    WORKLOAD: deploy/fe-staff
-    CONTAINER: fe-staff
+    WORKLOAD: deploy/fe-user-growth
+    CONTAINER: fe-user-growth
     
 Update testing4 env:
   <<: *deploy_base
@@ -76,8 +76,8 @@ Update testing4 env:
   variables:
     KUBE_CLUSTER: bjt
     NAMESPACE: testing4
-    WORKLOAD: deploy/fe-staff
-    CONTAINER: fe-staff
+    WORKLOAD: deploy/fe-user-growth
+    CONTAINER: fe-user-growth
 
 Update testing5 env:
   <<: *deploy_base
@@ -87,8 +87,8 @@ Update testing5 env:
   variables:
     KUBE_CLUSTER: bjt
     NAMESPACE: testing5
-    WORKLOAD: deploy/fe-staff
-    CONTAINER: fe-staff
+    WORKLOAD: deploy/fe-user-growth
+    CONTAINER: fe-user-growth
 
 
 Update testing6 env:
@@ -99,8 +99,8 @@ Update testing6 env:
   variables:
     KUBE_CLUSTER: bjt
     NAMESPACE: testing6
-    WORKLOAD: deploy/fe-staff
-    CONTAINER: fe-staff
+    WORKLOAD: deploy/fe-user-growth
+    CONTAINER: fe-user-growth
     
 
 Update testing7 env:
@@ -111,8 +111,8 @@ Update testing7 env:
   variables:
     KUBE_CLUSTER: bjt
     NAMESPACE: testing7
-    WORKLOAD: deploy/fe-staff
-    CONTAINER: fe-staff
+    WORKLOAD: deploy/fe-user-growth
+    CONTAINER: fe-user-growth
 
 
 Update testing8 env:
@@ -123,8 +123,8 @@ Update testing8 env:
   variables:
     KUBE_CLUSTER: bjt
     NAMESPACE: testing8
-    WORKLOAD: deploy/fe-staff
-    CONTAINER: fe-staff    
+    WORKLOAD: deploy/fe-user-growth
+    CONTAINER: fe-user-growth    
 
     
  
@@ -138,8 +138,8 @@ Update production env(k8sbj):
   variables:
     KUBE_CLUSTER: k8sbj
     NAMESPACE: production
-    WORKLOAD: deploy/fe-staff
-    CONTAINER: fe-staff
+    WORKLOAD: deploy/fe-user-growth
+    CONTAINER: fe-user-growth
     
 Update staging env:
   <<: *deploy_base
@@ -151,8 +151,8 @@ Update staging env:
   variables:
     KUBE_CLUSTER: k8sbj
     NAMESPACE: staging
-    WORKLOAD: deploy/fe-staff
-    CONTAINER: fe-staff
+    WORKLOAD: deploy/fe-user-growth
+    CONTAINER: fe-user-growth
     
     
 Update market env:
@@ -165,5 +165,5 @@ Update market env:
   variables:
     KUBE_CLUSTER: k8sbj
     NAMESPACE: market
-    WORKLOAD: deploy/fe-staff
-    CONTAINER: fe-staff    
+    WORKLOAD: deploy/fe-user-growth
+    CONTAINER: fe-user-growth    
