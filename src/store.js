@@ -1,38 +1,80 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+// 我们可以写得简单一些
+import Vue from 'vue'
+import Vuex from 'vuex'
+import { login, getInfo } from '@/services/user'
+import { setToken, removeToken } from '@/utils/auth'
+import router from './router'
 
-Vue.use(Vuex);
 
-export default new Vuex.Store({
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
     state: {
-        roleAdd: false,
-        roleDelete: false,
-        permissionMenu: false,
-        userAdd: false,
-        userDelete: false,
-        userUpdate: false,
-        permissionAdd: false,
-        permissionUpdate: false
+        roles: [],
+        name: '',
+        routes: router,
+        uploadImages: {}
     },
     mutations: {
-            /* eslint no-param-reassign: ["error", 
-            { "props": true, "ignorePropertyModificationsFor": ["state"] }] */
-        savePower(state, payload) {
-            state.roleAdd = payload.indexOf('role:add') !== -1;
-            state.roleDelete = payload.indexOf('role:delete') !== -1;
-            state.permissionMenu = payload.indexOf('permission:menu') !== -1;
-            state.userAdd = payload.indexOf('user:add') !== -1;
-            state.userDelete = payload.indexOf('user:delete') !== -1;
-            state.userUpdate = payload.indexOf('user:update') !== -1;
-            state.permissionAdd = payload.indexOf('permission:add') !== -1;
-            state.permissionUpdate = payload.indexOf('permission:update') !== -1;
+        SET_TOKEN: (state, token) => {
+            state.token = token
         },
-    },
-    actions: {
-        savePower({
-            commit
-        }, payload) {
-            commit('savePower', payload);
+        SET_NAME: (state, name) => {
+            state.name = name;
+        },
+        SET_ROLES: (state, roles) => {
+            state.roles = roles
+        },
+        SET_UPLOAD_IMG: (state, images) => {
+            state.uploadImages = {...state.uploadImages, ...images}
+        },
+        REMOVE_UPLOAD_IMG: (state) => {
+            state.uploadImages = {}
         }
+    },
+    // 下面这两个都是全局的
+    actions: {
+        getInfo({ commit, state }) {
+            return new Promise((resolve, reject) => {
+                getInfo(state.token).then(response => {
+                    // const { data } = response.data
+                    if(!response.data) {
+                        reject(`Verification failed, please Login again.`)
+                    }
+                    const { permissionCodeList, userVo } = response.data.data
+                    commit('SET_NAME', userVo.username)
+                    commit('SET_ROLES', permissionCodeList)
+                    resolve(permissionCodeList)
+                })
+            })
+        },
+        resetToken({ commit }) {
+            return new Promise(resolve => {
+                commit('SET_TOKEN', '')
+                commit('SET_ROLES', [])
+                removeToken()
+                resolve()
+            })
+        },
+        addUplaodImages({ commit, state }, imgUrlObj) {
+            return new Promise((resolve) => {
+                commit('SET_UPLOAD_IMG', imgUrlObj)
+                resolve()
+            })
+        },
+        removeUploadImages({ commit, state }) {
+            return new Promise((resolve) => {
+                commit('REMOVE_UPLOAD_IMG')
+                resolve()
+            })
+        }
+    },
+    getters: {
+        roles: state => state.roles,
+        name: state => state.name,
+        routesConfig: state => state.routes.options.routes,
+        uploadImages: state => state.uploadImages
     }
 })
+
+export default store

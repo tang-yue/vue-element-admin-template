@@ -1,30 +1,30 @@
 <template>
-  <div id="app">    
+  <div id="app">
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import 'normalize.css';
 
 export default {
   name: 'app',
-  data() {
-    return {
-    }
-  },
   components: {
-
-  },
-  methods: {
-
+    
   }
 }
 </script>
 
 <style>
-    html,body,#app {
-        font-size: 14px;
-        height: 100%;
-    }
+html, body {
+  height: 100%;
+  margin: 0
+}
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+  height: 100%;
+  font-size: 13px;
+}
 </style>

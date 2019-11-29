@@ -4,7 +4,7 @@
       class="formCard"
       v-if="login"
       >
-      <h3>用户后台登录</h3>
+      <h3>增长运营后台</h3>
       <p>
         <input
           id="username"
@@ -82,7 +82,7 @@
   </div>
 </template>
 <script>
-  import { login, savePassword } from '@/services/login';
+  import { login } from '@/services/user';
   import Cookie from 'js-cookie';
 
   export default {
@@ -117,14 +117,16 @@
             type: 'post',
             params: { username: this.username, password: this.password },
           }).then((res) => {
-            if (res.errCode === 0) {
-              Cookie.set('staffToken', res.data.token);
-              Cookie.set('staffUserId', res.data.user.id);
-              Cookie.set('staffId', res.data.user.uuid);
-              Cookie.set('staffNickname', res.data.user.username);
-              this.$router.push('/fe-staff/power');
-            } else if (res.errCode === 10110002) {
-              this.$router.push('/fe-staff/login');
+            if (res.data&&res.data.errCode === 0) {
+              const { data } = res.data;
+              Cookie.set('staffToken', data.token);
+              Cookie.set('staffUserId', data.user.id);
+              Cookie.set('staffId', data.user.uuid);
+              Cookie.set('staffNickname', data.user.username);
+              window.location.href = window.location.origin + '/fe-user-growth/dashboard/userRelation'
+            } else if (res.data&&res.data.errCode === 10110002) {
+              Cookie.remove('staffToken')
+              this.$router.push('/login');
             } else {
               this.$message({ message: '对不起，你和用户名和密码输入错误，请重新输入', duration: 3000 });
             }
@@ -166,10 +168,10 @@
               newPassword: this.newPassword
             }
           }).then((res) => {
-            if (res.errCode === 0) {
+            if (res.data&&res.data.errCode === 0) {
               this.$message({ message: '修改密码成功', duration: 3000 });
               this.login = true;
-            } else if (res.errCode === 10110002) {
+            } else if (res.data&&res.data.errCode === 10110002) {
               this.$router.push('/fe-staff/login')
             } else {
               this.$message({ message: '修改密码失败，请重试', duration: 3000 });
@@ -239,6 +241,7 @@ h3 {
 .login {
   height: 100%;
   background-color: #2d3a4b;
+  min-height: 100vh;
 }
 .formCard {
   width: 400px;

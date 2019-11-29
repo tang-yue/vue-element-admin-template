@@ -1,0 +1,87 @@
+.layout {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    a {
+        text-decoration: none;
+    }
+    .menu {
+        height: 100%;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1001;
+        .activeWidth {
+            width: 230px;
+        }
+        .el-menu {
+            height: 100%;
+            background-color: #304156;
+            .el-submenu__title {
+                background-color: #304156;
+                color: #bfcbd9;
+                text-align: left;
+                i {
+                    color: #bfcbd9 !important;
+                }
+                &:hover {
+                background-color: #263445 !important;
+                }
+            }
+            .nest-menu .el-menu-item {
+                color: #bfcbd9;
+                background-color: #1f2d3d !important;
+                &:hover {
+                    background-color: #001528 !important;
+                }
+            }
+            .el-icon-arrow-right:before {
+                content: '' !important;
+            }
+            .el-menu-item {
+                text-align: left;
+                color: #bfcbd9;
+                &:hover {
+                    color: #409EFF
+                }
+            }
+            i {
+                color: #bfcbd9 !important;
+            }
+            .el-menu-item.is-active {
+                color: #409EFF;
+            }
+        }
+    }
+    .main {
+        position: relative;
+        min-height: 100%;
+        margin-left: 230px;
+        transition: margin-left .28s; // 原来滑动效果是这样做出来的
+        .header {
+            height: 50px;
+            width: 100%;
+            box-shadow: 1px 2px 6px #ddd;
+            .el-icon-s-fold, .el-icon-s-unfold {
+                cursor: pointer;
+                margin: 13px 10px;
+                float: left;
+                font-size: 24px;
+            }
+            .user {
+                cursor: pointer;
+                float: right;
+                margin: 15px 40px;
+            }
+        }
+        .el-form-item__label {
+            line-height: 20px !important;
+        }
+    }
+}
+.hideSidebar {
+    .main {
+        margin-left: 54px;
+    }
+}
