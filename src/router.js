@@ -6,6 +6,8 @@ import Layout from './views/Layout'
 import Login from './views/Login'
 // 共同拥有部分, 不需要任何的权限
 import UserRelation from './views/UserRelation/UserRelation'
+// 404 页面
+import errorPage from './views/error-page/404'
 
 // 产品运营部分
 import PunchCard from './views/Card/PunchCard/PunchCard'
@@ -307,6 +309,11 @@ export default new Router({
             path: '/login',
             name: "Login",
             component: Login
+        },
+        {
+            path: '*',
+            name: '404',
+            component: errorPage
         }
     ]
 })
