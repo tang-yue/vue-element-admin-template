@@ -28,12 +28,13 @@ import InvitePoster from './views/Invite/InvitePoster/InvitePoster'
 import InviteCashbackOrders from './views/Invite/InviteCashbackOrders/InviteCashbackOrders'
 // 广告后台/创建/编辑广告
 
-import AdvertisePlan from './views/advertise/create/plan'
-import AdvertiseCondition from './views/advertise/create/condition'
-import customerNews from './views/advertise/create/content/customerNews'
-import fortyEightNews from './views/advertise/create/content/fortyEightNews'
-import interactiveNews from './views/advertise/create/content/interactiveNews'
-import advertiseList from './views/advertise/list/'
+
+// import AdvertisePlan from './views/advertise/create/plan'
+// import AdvertiseCondition from './views/advertise/create/condition'
+// import customerNews from './views/advertise/create/content/customerNews'
+// import fortyEightNews from './views/advertise/create/content/fortyEightNews'
+// import interactiveNews from './views/advertise/create/content/interactiveNews'
+// import advertiseList from './views/advertise/list/'
 
 
 
