@@ -28,6 +28,10 @@ import InviteCashbackOrders from './views/Invite/InviteCashbackOrders/InviteCash
 
 import AdvertisePlan from './views/advertise/create/plan'
 import AdvertiseCondition from './views/advertise/create/condition'
+import customerNews from './views/advertise/create/content/customerNews'
+import fortyEightNews from './views/advertise/create/content/fortyEightNews'
+import interactiveNews from './views/advertise/create/content/interactiveNews'
+import advertiseList from './views/advertise/list/'
 
 
 
@@ -218,15 +222,15 @@ export default new Router({
                             children: [
                                 {
                                     path: 'fortyEightcustomerServiceNews',
-                                    component: InviteCashbackOrders
+                                    component: fortyEightNews
                                 },
                                 {
                                     path: 'interactiveCustomerServiceMessages',
-                                    component: InviteCashbackOrders
+                                    component: interactiveNews
                                 },
                                 {
                                     path: 'customerServiceNews',
-                                    component: InviteCashbackOrders
+                                    component: customerNews
                                 }
                             ]
                         }
@@ -244,7 +248,7 @@ export default new Router({
                     children: [
                         {
                             path: 'table',
-                            component: InviteCashbackOrders
+                            component: advertiseList,
                         },
                         {
                             path: 'plan/:id',

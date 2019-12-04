@@ -14,7 +14,7 @@
                 </el-select>
                 <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleSearch">
                 查询
-            </el-button>
+                </el-button>
             </div>
             <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">创建</el-button>
         </div>
@@ -25,7 +25,7 @@
             fit
             highlight-current-row
         >
-         <el-table-column label="等级" prop="id" align="center" width="50">
+         <el-table-column label="等级" align="center" width="50">
              <template slot-scope="{row}">
                  <span>{{ row.id }}</span>
              </template>

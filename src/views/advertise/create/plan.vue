@@ -30,12 +30,25 @@
                     <el-button type="primary" style="padding: 9px 50px" @click="createPlan">下一步</el-button>
                 </div>
             </div>
-            <el-dialog title="添加业务类型" :visible.sync="dialogFormVisible">
-                <el-form ref="dataForm" :rules="bizRules" :model="bizData" label-position="left" label-width="100px">
+            <el-dialog title="添加业务类型" :visible.sync="dialogFormVisible" width="40%">
+                <el-form 
+                    ref="bizForm" 
+                    :rules="bizRules" 
+                    :model="bizData" 
+                    label-position="left" 
+                    label-width="80px"
+                    style="width: 400px; margin-left:50px;" 
+                    size="small"
+                >
                     <el-form-item label="业务类型" prop="name">
                         <el-input v-model="bizData.name" />
                     </el-form-item>
                 </el-form>
+                <div style="width: 600px">
+                    <div style="width: 150px; margin:0 auto;">
+                        <el-button type="primary" style="padding: 9px 50px" @click="confirmBiz">确认</el-button>
+                    </div>
+                </div>
             </el-dialog>
         </div>
     </div>
@@ -47,8 +60,13 @@ import {
     getAllPositions, 
     getAllBizs,
     addBiz,
-    createAdvertisePlan
+    createAdvertisePlan,
+    getAdvertiseInfo,
+    updateAdvertisePlan
 } from '../../../services/advertise'
+
+import { getStaffUserId } from '../../../utils/auth'
+
 export default {
     name: 'AdvertisePlan',
     data() {
@@ -74,13 +92,16 @@ export default {
             bizRules: {
                 name: [{ required: true, message: '业务名称不能为空', trigger: 'change' }]
             },
-            dialogFormVisible: false
+            dialogFormVisible: false,
+            advertiseId: this.$route.params.id
         }
     },
     created() {
         this.getInitData()
         this.getBizData()
-        console.log(this.planData.biz_type_id)
+        if(!isNaN(this.advertiseId)) {
+            this.getAdvertiseInfo();
+        }
     },
     methods: {
         getInitData() {
@@ -95,6 +116,17 @@ export default {
                 }
             })
         },
+        // 获取广告信息
+        getAdvertiseInfo() {
+            getAdvertiseInfo({
+                id: this.advertiseId
+            }).then((res) => {
+                if(res.data && res.data.errCode === 0) {
+                    // 不做任何的事情
+                    Object.assign(this.planData, res.data.data)
+                }
+            })
+        },
         // 获取业务类型数据
         getBizData() {
             getAllBizs({}).then((res) => {
@@ -104,20 +136,50 @@ export default {
             })
         },
         createPlan() {
-            createAdvertisePlan({
-                type: 'POST',
-                params: {...this.planData}
-            }).then((res) => {
-                if(res.data && res.data.errCode === 0) {
-                    this.$message.success('创建广告计划成功')
-                    this.$router.push({path: `/advertise/create/condition/${res.data.data.id}`})
-                } else {
-                    this.$message.success('创建广告计划失败')
-                }
-            })
+            if(isNaN(this.advertiseId)) {
+                createAdvertisePlan({
+                    type: 'POST',
+                    params: { ...this.planData, owner_id: getStaffUserId() }
+                }).then((res) => {
+                    if(res.data && res.data.errCode === 0) {
+                        this.$message.success('创建广告计划成功')
+                        this.$router.push({path: `/advertise/create/condition/${res.data.data.id}`})
+                    } else {
+                        this.$message.success('创建广告计划失败')
+                    }
+                })
+            } else {
+                updateAdvertisePlan({
+                    id: this.advertiseId,
+                    params: { ...this.planData }
+                }).then((res) => {
+                    if(res.data && res.data.errCode === 0) {
+                        this.$message.success('更新广告计划成功')
+                        this.$router.push({path: `/advertise/create/condition/${this.advertiseId}`})
+                    }
+                })
+            }
         },
         addBiz() {
-            this.dialogFormVisible = true;
+            this.dialogFormVisible = true
+            this.bizData.name = null
+            this.$nextTick(() => {
+                this.$refs['bizForm'].clearValidate()
+            })
+        },
+        confirmBiz() {
+            this.dialogFormVisible = false
+            addBiz({
+                type: 'POST',
+                params: { name: this.bizData.name }
+            }).then((res) => {
+                if(res.data && res.data.errCode === 0) {
+                    this.$message.success('添加业务类型成功')
+                    this.getBizData()
+                } else {
+                    this.$message.error('添加业务类型失败')
+                }
+            })
         }
     }
 }
