@@ -1,4 +1,4 @@
-const title = 'User Growth Amdin'
+const title = 'vue-element-admin-template'
 
 export default function getPageTitle(pageTitle) {
     if(pageTitle) {

@@ -1,39 +1,39 @@
+@backgroundColorSty: #304156;
+
 .layout {
     position: relative;
     height: 100%;
     width: 100%;
-    a {
-        text-decoration: none;
-    }
     .menu {
+        background-color: @backgroundColorSty;
         height: 100%;
         position: fixed;
         top: 0;
         bottom: 0;
         left: 0;
         z-index: 1001;
+        .scrollbar-wrapper {
+            overflow-x: hidden !important;
+        }
+        .scrollbar-wrapper {
+            overflow-x: hidden !important;
+        }
+        .el-scrollbar__bar.is-vertical {
+            right: 0px;
+        }
+        .el-scrollbar {
+            height: 100%;
+        }
         .activeWidth {
             width: 230px;
+            transition: transform .28s;
         }
         .el-menu {
             height: 100%;
-            background-color: #304156;
             .el-submenu__title {
-                background-color: #304156;
-                color: #bfcbd9;
                 text-align: left;
                 i {
-                    color: #bfcbd9 !important;
-                }
-                &:hover {
-                background-color: #263445 !important;
-                }
-            }
-            .nest-menu .el-menu-item {
-                color: #bfcbd9;
-                background-color: #1f2d3d !important;
-                &:hover {
-                    background-color: #001528 !important;
+                    color: #dee4eb;
                 }
             }
             .el-icon-arrow-right:before {
@@ -41,20 +41,11 @@
             }
             .el-menu-item {
                 text-align: left;
-                color: #bfcbd9;
-                &:hover {
-                    color: #409EFF
-                }
-            }
-            i {
-                color: #bfcbd9 !important;
-            }
-            .el-menu-item.is-active {
-                color: #409EFF;
             }
         }
     }
     .main {
+        line-height: 32px;
         position: relative;
         min-height: 100%;
         margin-left: 230px;
@@ -63,20 +54,20 @@
             height: 50px;
             width: 100%;
             box-shadow: 1px 2px 6px #ddd;
+            background-color: #fff;
             .el-icon-s-fold, .el-icon-s-unfold {
                 cursor: pointer;
                 margin: 13px 10px;
-                float: left;
-                font-size: 24px;
+                font-size: 25px;
             }
             .user {
                 cursor: pointer;
                 float: right;
-                margin: 15px 40px;
+                font-size: 18px;
+                font-weight: bold;
+                margin: 15px 25px;
+                text-align: center;
             }
-        }
-        .el-form-item__label {
-            line-height: 20px !important;
         }
     }
 }
@@ -85,3 +76,4 @@
         margin-left: 54px;
     }
 }
+

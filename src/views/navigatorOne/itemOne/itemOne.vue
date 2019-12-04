@@ -1,12 +1,11 @@
 <template>
     <div class="title">
-        登录成功页
+       /navigatorOne/itemThree
     </div>
 </template>
 
 
 <script>
-
 export default {
 }
 </script>

@@ -7,7 +7,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((req) => {
-  req.headers.authorization = Cookie.get('staffToken');
+  req.headers.authorization = Cookie.get('token');
   return req;
 }, err => Promise.reject(err));
 
@@ -29,12 +29,7 @@ export default function request(url, options) {
       }).then((res) => {
         if (res) {
           const h = res.headers;
-          // console.log(h, 'hhhh');
-          // if(!!h&&h['Content-Type'].startsWith("application/json")) {
             resolve({data: res.data, headers:h})
-          // } else {
-            // resolve(res.data);
-          // }
         } 
         return res;
       })

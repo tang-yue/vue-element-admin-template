@@ -1,6 +1,6 @@
 <template>
     <div class="title">
-        登录成功页
+        /navigatorOne/itemTwo
     </div>
 </template>
 
