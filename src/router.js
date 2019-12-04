@@ -292,15 +292,15 @@ export default new Router({
                         powerCode: 'inviteList:view'
                     }
                 },
-                // {
-                //     path: 'data',
-                //     component: InviteCashbackOrders,
-                //     meta: {
-                //         title: '广告数据',
-                //         menuPath: '/advertise/data',
-                //         powerCode: 'inviteList:view'
-                //     }
-                // }
+                {
+                    path: 'data',
+                    component: InviteCashbackOrders,
+                    meta: {
+                        title: '广告数据',
+                        menuPath: '/advertise/data',
+                        powerCode: 'inviteList:view'
+                    }
+                }
             ]
         },
         {

@@ -1,10 +1,8 @@
-// 我们可以写得简单一些
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { login, getInfo } from '@/services/user'
 import { setToken, removeToken } from '@/utils/auth'
 import router from './router'
-
 
 Vue.use(Vuex)
 

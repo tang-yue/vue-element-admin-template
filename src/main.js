@@ -5,7 +5,6 @@ import App from './App'
 import router from './router'
 import store from './store'
 import '@/styles/index.less' // global css
-// import '@/styles/element-ui.less' // element-ui
 import './permission'
 
 Vue.use(ElementUI);

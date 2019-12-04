@@ -1,34 +1,38 @@
 <template>
     <div class="layout" v-bind:class="{hideSidebar: isCollapse}">
         <div class="menu">
-            <el-menu 
-                :collapse="isCollapse" 
-                :default-active="activeMenu"
-                background-color="#304156"
-                v-bind:class="{activeWidth: !isCollapse}"
-                class="el-menu-vertical-demo"
-            >
-                <div v-for="(route, index) in routesConfig" :key="route.path">
-                    <el-submenu :index="`${index}`" class="nest-menu" v-if="route.isPower">
-                        <template slot="title">
-                            <i class="el-icon-takeaway-box"></i>
-                            <span v-if="!isCollapse" slot='title'>{{route.name}}</span>
-                        </template>
-                        <div v-if="route.children&&route.children.length > 0">
-                            <router-link v-for="(item, v) in route.children" :to="item.meta.menuPath" :key="item.path">
-                                <el-menu-item :index="`${index}-${v}`" v-if="isPower(item.meta.powerCode)">{{item.meta.title}}</el-menu-item>
-                            </router-link>
-                        </div>
-                    </el-submenu>
-                </div>
-            </el-menu>
+            <el-scrollbar wrap-class="scrollbar-wrapper">
+                <el-menu 
+                    :collapse="isCollapse" 
+                    :default-active="activeMenu"
+                    background-color="#304156"
+                    text-color="#bfcbd9"
+                    v-bind:class="{activeWidth: !isCollapse}"
+                    class="el-menu-vertical-demo"
+                    :collapse-transition="false"
+                >
+                    <div v-for="(route, index) in routesConfig" :key="route.path">
+                        <el-submenu :index="`${index}`" class="nest-menu" v-if="route.isPower">
+                            <template slot="title">
+                                <i class="el-icon-takeaway-box"></i>
+                                <span v-if="!isCollapse" slot='title'>{{route.name}}</span>
+                            </template>
+                            <div v-if="route.children&&route.children.length > 0">
+                                <router-link v-for="(item, v) in route.children" :to="item.meta.menuPath" :key="item.path">
+                                    <el-menu-item :index="`${index}-${v}`" v-if="isPower(item.meta.powerCode)">{{item.meta.title}}</el-menu-item>
+                                </router-link>
+                            </div>
+                        </el-submenu>
+                    </div>
+                </el-menu>
+            </el-scrollbar>
         </div>
         <div class="main">
             <div class="header">
                 <i class="el-icon-s-fold" v-if="!isCollapse" v-on:click="fold"></i>
                 <i class="el-icon-s-unfold" v-on:click="fold" v-else></i>
                 <el-dropdown class="user">
-                    <div>admin</div>
+                    <div>{{ userName }}</div>
                     <el-dropdown-menu>
                         <el-dropdown-item>
                             <span v-on:click="signOut">sign out</span>
@@ -49,6 +53,7 @@
 import { mapGetters } from 'vuex'
 import path from 'path'
 import { judgePower } from '../utils/utils'
+import { getStaffNickname } from '../utils/auth'
 import { 
     removeStaffUserId, 
     removeStaffId, 
@@ -61,7 +66,8 @@ export default {
         return {
             isCollapse: false,
             activeMenu: "0-0",
-            route: this.$route
+            route: this.$route,
+            userName: getStaffNickname()
         }
     },
     created() {        

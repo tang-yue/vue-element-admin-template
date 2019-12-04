@@ -54,8 +54,8 @@
         <input
           id="password"
           v-model="password"
-          type="text"
           name="password"
+          type="password"
           placeholder="原密码"
         >
       </p>
@@ -65,8 +65,8 @@
         <input
           id="newPassword"
           v-model="newPassword"
-          type="text"
           name="newPassword"
+          type="password"
           placeholder="新密码"
         >
       </p>
@@ -82,7 +82,7 @@
   </div>
 </template>
 <script>
-  import { login } from '@/services/user';
+  import { login, savePassword } from '@/services/user';
   import Cookie from 'js-cookie';
 
   export default {
@@ -126,7 +126,7 @@
               window.location.href = window.location.origin + '/fe-user-growth/dashboard/userRelation'
             } else if (res.data&&res.data.errCode === 10110002) {
               Cookie.remove('staffToken')
-              this.$router.push('/login');
+              this.$router.push({ path: '/login' });
             } else {
               this.$message({ message: '对不起，你和用户名和密码输入错误，请重新输入', duration: 3000 });
             }
@@ -171,8 +171,9 @@
             if (res.data&&res.data.errCode === 0) {
               this.$message({ message: '修改密码成功', duration: 3000 });
               this.login = true;
+              this.password = '';
             } else if (res.data&&res.data.errCode === 10110002) {
-              this.$router.push('/fe-staff/login')
+              this.$router.push({path: '/login' })
             } else {
               this.$message({ message: '修改密码失败，请重试', duration: 3000 });
             }
@@ -241,7 +242,8 @@ h3 {
 .login {
   height: 100%;
   background-color: #2d3a4b;
-  min-height: 100vh;
+  min-height: 100%;
+  overflow: hidden;
 }
 .formCard {
   width: 400px;

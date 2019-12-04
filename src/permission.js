@@ -17,14 +17,12 @@ router.beforeEach(async(to, from, next) => {
 
     const hasToken = getToken()
     if (hasToken) {
-        
        if (to.path === '/login') {
            next({ path: '/' })
            NProgress.done()
        } else {
          const hasRoles = store.state.roles && store.state.roles.length > 0
          if(hasRoles) {
-            // console.log('执行这里了吗？');
              next()
          } else {
              try {
@@ -39,10 +37,8 @@ router.beforeEach(async(to, from, next) => {
          }
        }
     } else {
-        console.log('执行这里了吗？')
         if (whiteList.indexOf(to.path) !== -1) {
             next()
-            console.log('执行了222')
         } else {
             next(`/login`) // 这里只需要写login 就可以了
             NProgress.done()
