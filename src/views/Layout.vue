@@ -64,7 +64,7 @@ export default {
             route: this.$route
         }
     },
-    created() {
+    created() {        
         for(let i = 0; i < this.routesConfig.length; i++) {
             // 也就是说上面的index是这里i
             if(this.routesConfig[i].children) {
@@ -83,6 +83,9 @@ export default {
                 }
             }
         }
+        if(this.route.path === '/') {
+            this.activeMenu = '0-0'
+        }
     },
     computed: {
         ...mapGetters([
@@ -92,7 +95,6 @@ export default {
     },
     methods: {
         fold() {
-            console.log(this.route.path)
             this.isCollapse = !this.isCollapse;
         },
         isPower(powerCode) {

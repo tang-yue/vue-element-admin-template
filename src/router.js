@@ -42,6 +42,11 @@ export default new Router({
     base: '/fe-user-growth',
     routes: [
         {
+            path: '/',
+            name: 'home',
+            component: Layout,
+        },
+        {
             path: '/dashboard',
             name: '登录',
             component: Layout,
@@ -287,15 +292,15 @@ export default new Router({
                         powerCode: 'inviteList:view'
                     }
                 },
-                {
-                    path: 'data',
-                    component: InviteCashbackOrders,
-                    meta: {
-                        title: '广告数据',
-                        menuPath: '/advertise/data',
-                        powerCode: 'inviteList:view'
-                    }
-                }
+                // {
+                //     path: 'data',
+                //     component: InviteCashbackOrders,
+                //     meta: {
+                //         title: '广告数据',
+                //         menuPath: '/advertise/data',
+                //         powerCode: 'inviteList:view'
+                //     }
+                // }
             ]
         },
         {
