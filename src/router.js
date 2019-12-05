@@ -44,6 +44,7 @@ export default new Router({
             path: '/dashboard',
             name: '登录',
             component: Layout,
+            redirect: '/dashboard/userRelation',
             children: [
                 {
                     path: 'userRelation',
@@ -60,6 +61,7 @@ export default new Router({
             path: '/card',
             name: '产品运营',
             component: Layout,
+            redirect: '/card/punchCard',
             children: [
                 { 
                     path: 'punchCard',
@@ -94,6 +96,7 @@ export default new Router({
             path: '/invite',
             name: '邀请有礼活动',
             component: Layout,
+            redirect: '/invite/create',
             children: [
                 {
                     path: 'create',
