@@ -1,4 +1,4 @@
-const title = '增长运营后台'
+const title = 'vue-element-admin-template'
 
 export default function getPageTitle(pageTitle) {
     if(pageTitle) {
