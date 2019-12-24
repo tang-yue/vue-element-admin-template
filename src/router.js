@@ -10,7 +10,7 @@ import errorPage from './views/error-page/404'
 import navigatorOneThree from './views/navigatorOne/itemThree/itemThree'
 import navigatorOneTwo from './views/navigatorOne/itemTwo/itemTwo'
 import navigatorOneOne from './views/navigatorOne/itemOne/itemOne'
-import CommonInvite from './views/Invite/CommonInvite'
+import Common from './views/navigatorTwo/CommonInvite'
 
 import navigatorTwoOne from './views/navigatorTwo/itemOne/itemOne'
 import navigatorTwoTwo from './views/navigatorTwo/itemTwo/itemTwo'
@@ -93,7 +93,7 @@ export default new Router({
             children: [
                 {
                     path: 'itemOne',
-                    component: CommonInvite,
+                    component: Common,
                     redirect: '/navigatorTwo/itemOne/one/one',
                     meta: {
                         title: 'item one',
