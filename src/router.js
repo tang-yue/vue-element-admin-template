@@ -1,31 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
 import Layout from './views/Layout'
-
 import Login from './views/Login'
 // 共同拥有部分, 不需要任何的权限
 import UserRelation from './views/UserRelation/UserRelation'
 // 404 页面
 import errorPage from './views/error-page/404'
 
-// 产品运营部分
-import PunchCard from './views/Card/PunchCard/PunchCard'
-import GiftBanner from './views/Card/GiftBanner/GiftBanner'
-import CardGroup from './views/Card/CardGroup/CardGroup'
-// 邀请有礼活动管理部分
+import navigatorOneThree from './views/navigatorOne/itemThree/itemThree'
+import navigatorOneTwo from './views/navigatorOne/itemTwo/itemTwo'
+import navigatorOneOne from './views/navigatorOne/itemOne/itemOne'
 import CommonInvite from './views/Invite/CommonInvite'
-// 创建/编辑邀请有礼活动
-import InviteHead from './views/Invite/CreateInvite/CreateInvite'
-import InviteActivityContent from './views/Invite/CreateInvite/ActivityContent'
-import InvitePublicContent from './views/Invite/CreateInvite/PublicContent'
-import InviteTemplateMsg from './views/Invite/CreateInvite/templateMsg'
 
-
-import InviteList from './views/Invite/InviteList/InviteList'
-import InviteTextList from './views/Invite/InviteTextList/InviteTextList'
-import InvitePoster from './views/Invite/InvitePoster/InvitePoster'
-import InviteCashbackOrders from './views/Invite/InviteCashbackOrders/InviteCashbackOrders'
+import navigatorTwoOne from './views/navigatorTwo/itemOne/itemOne'
+import navigatorTwoTwo from './views/navigatorTwo/itemTwo/itemTwo'
+import navigatorTwoThree from './views/navigatorTwo/itemThree/itemThree'
+import navigatorTwoFour from './views/navigatorTwo/itemFour/itemFour'
 
 
 
@@ -33,7 +23,7 @@ Vue.use(Router);
 
 export default new Router({
     mode: 'history',
-    base: '/fe-user-growth',
+    base: '/vue-element-admin-template',
     routes: [
         {
             path: '/',
@@ -44,153 +34,156 @@ export default new Router({
             path: '/dashboard',
             name: '登录',
             component: Layout,
-            redirect: '/dashboard/userRelation',
+            redirect: '/dashboard/login',
+            icon: 'el-icon-suitcase',
             children: [
                 {
-                    path: 'userRelation',
+                    path: 'login',
                     component: UserRelation,
                     meta: {
                         title: '登录成功页',
-                        menuPath: '/dashboard/userRelation',
+                        menuPath: '/dashboard/login',
                         powerCode: ' '
                     }
                 }
             ]
         },
         {
-            path: '/card',
-            name: '产品运营',
+            path: '/navigatorOne',
+            name: 'navigator one',
             component: Layout,
-            redirect: '/card/punchCard',
+            redirect: '/navigatorOne/itemOne',
+            icon: 'el-icon-goods',
             children: [
                 { 
-                    path: 'punchCard',
-                    component: PunchCard,
+                    path: 'itemOne',
+                    component: navigatorOneOne,
                     meta: {
-                        title: '打卡分享页', 
-                        menuPath: '/card/punchCard',
-                        powerCode: 'punch_share:view'
+                        title: 'item one', 
+                        menuPath: '/navigatorOne/itemOne',
+                        powerCode: 'item-one:view'
                     } 
                 },
                 {
-                    path: 'giftBanner',
-                    component: GiftBanner,
+                    path: 'itemTwo',
+                    component: navigatorOneTwo,
                     meta: {
-                        title: '打卡页礼物banner',
-                        menuPath: '/card/giftBanner',
-                        powerCode: 'punch_gift:view'
+                        title: 'item two',
+                        menuPath: '/navigatorOne/itemTwo',
+                        powerCode: 'item-two:view'
                     }
                 },
                 {
-                    path: 'group',
-                    component: CardGroup,
+                    path: 'itemThree',
+                    component: navigatorOneThree,
                     meta: {
-                        title: '拼团管理',
-                        menuPath: '/card/group',
-                        powerCode: 'group:view'
+                        title: 'itme three',
+                        menuPath: '/navigatorOne/itemThree',
+                        powerCode: 'item-three:view'
                     }
                 }
             ]
         },
         {
-            path: '/invite',
-            name: '邀请有礼活动',
+            path: '/navigatorTwo',
+            name: 'Navigator two',
             component: Layout,
-            redirect: '/invite/create',
+            redirect: '/navigatorTwo/itemOne',
+            icon: 'el-icon-takeaway-box',
             children: [
                 {
-                    path: 'create',
+                    path: 'itemOne',
                     component: CommonInvite,
-                    redirect: '/invite/create/head/head',
+                    redirect: '/navigatorTwo/itemOne/one/one',
                     meta: {
-                        title: '创建活动',
-                        menuPath: '/invite/create',
-                        powerCode: 'inviteList:view'
+                        title: 'item one',
+                        menuPath: '/navigatorTwo/itemOne',
+                        powerCode: 'item-one:view'
                     },
                     children: [
                         {
-                            path: 'head/:id',
-                            component: InviteHead,
+                            path: 'one/:id',
+                            component: navigatorTwoOne,
                         },
                         {
-                            path: 'activityContent/:id',
-                            component: CardGroup
+                            path: 'two/:id',
+                            component: navigatorOneTwo
                         },
                         {
-                            path: 'publicContent/:id',
-                            component: CardGroup
+                            path: 'three/:id',
+                            component: navigatorOneTwo
                         },
                         {
-                            path: 'templateMsg/:id',
-                            component: CardGroup
+                            path: 'four/:id',
+                            component: navigatorOneTwo
                         },
                         {
-                            path: 'configurePage/:id',
-                            component: CardGroup
+                            path: 'five/:id',
+                            component: navigatorOneTwo
                         }
                     ]
                 },
                 {
-                    path: 'list',
-                    component: InviteHead,
-                    redirect: '/invite/list/table',
+                    path: 'itemTwo',
+                    component: navigatorTwoOne,
+                    redirect: '/navigatorTwo/itemTwo/table',
                     meta: {
-                        title: '全部活动',
-                        menuPath: '/invite/list',
-                        powerCode: 'inviteList:view'
+                        title: 'item two',
+                        menuPath: '/navigatorTwo/itemTwo',
+                        powerCode: 'item-two:view'
                     },
                     children: [
                         {
                             path: 'table',
-                            component: InviteHead,
+                            component: navigatorTwoOne,
                         },
                         {
-                            path: 'head/:id',
-                            component: InviteHead,
+                            path: 'one/:id',
+                            component: navigatorTwoOne,
                         },
                         {
-                            path: 'activityContent/:id',
-                            component: CardGroup
+                            path: 'two/:id',
+                            component: navigatorOneTwo
                         },
                         {
-                            path: 'publicContent/:id',
-                            component: CardGroup
+                            path: 'three/:id',
+                            component: navigatorOneTwo
                         },
                         {
-                            path: 'templateMsg/:id',
-                            component: CardGroup
+                            path: 'four/:id',
+                            component: navigatorOneTwo
                         },
                         {
-                            path: 'configurePage/:id',
-                            component: CardGroup
+                            path: 'five/:id',
+                            component: navigatorOneTwo
                         }
                     ]
                 },
                 {
-                    path: 'text',
-                    component: InviteTextList,
+                    path: 'itemThree',
+                    component: navigatorTwoTwo,
                     meta: {
-                        title: '文案管理',
-                        menuPath: '/invite/text',
-                        powerCode: 'inviteTextLists:view'
+                        title: 'item three',
+                        menuPath: '/navigatorTwo/itemThree',
+                        powerCode: 'item-three:view'
                     }
                 },
                 {
-                    path: 'poster',
-                    component: InvitePoster,
+                    path: 'itemFour',
+                    component: navigatorTwoThree,
                     meta: {
-                        title: '海报管理',
-                        menuPath: '/invite/poster',
-                        powerCode: 'invitePosterList:view'
+                        title: 'item four',
+                        menuPath: '/navigatorTwo/itemFour',
+                        powerCode: 'item-four:view'
                     }
                 },
                 {
-                    path: 'cashbackOrders',
-                    component: InviteCashbackOrders,
+                    path: 'itemFive',
+                    component: navigatorTwoFour,
                     meta: {
-                        title: '返回订单',
-                        menuPath: '/invite/cashbackOrders',
-                        powerCode: 'inviteList:view'
+                        title: 'item five',
+                        menuPath: '/navigatorTwo/itemFive',
+                        powerCode: 'item-five:view'
                     }
                 }
             ]

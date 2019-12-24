@@ -1,14 +1,11 @@
 <template>
     <div class="title">
-        /invite/list
+       /navigatorTwo/itemOne/one/one
     </div>
 </template>
 
-
 <script>
-
 export default {
-    name: 'InviteList'
 }
 </script>
 

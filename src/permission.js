@@ -1,6 +1,6 @@
 import router from './router'
 import store from './store'
-import { Message } from 'element-ui'
+// import { Message } from 'element-ui'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getToken } from '@/utils/auth'
@@ -24,16 +24,16 @@ router.beforeEach(async(to, from, next) => {
          const hasRoles = store.state.roles && store.state.roles.length > 0
          if(hasRoles) {
              next()
-         } else {
-             try {
-                await store.dispatch('getInfo')  // 这里需要注意下请求接口需要变成异步的，如果同步，那么将会报错。
-                next({ ...to, replace: true})
-             } catch (error) {
-                await store.dispatch('resetToken')
-                Message.error(error || 'Has Error')
-                next(`/login?redirect=${to.path}`)
-                NProgress.done()
-             }
+        //  } else {
+        //      try {
+        //         await store.dispatch('getInfo')  // 这里需要注意下请求接口需要变成异步的，如果同步，那么将会报错。
+        //         next({ ...to, replace: true})
+        //      } catch (error) {
+        //         await store.dispatch('resetToken')
+        //         Message.error(error || 'Has Error')
+        //         next(`/login?redirect=${to.path}`)
+        //         NProgress.done()
+        //      }
          }
        }
     } else {

@@ -1,6 +1,6 @@
 <template>
     <div class="title">
-        /invite/text/list
+        /navigatorTwo/itemFive
     </div>
 </template>
 
@@ -8,7 +8,6 @@
 <script>
 
 export default {
-    name: 'InviteTextList'
 }
 </script>
 

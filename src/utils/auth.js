@@ -1,29 +1,29 @@
 import Cookies from 'js-cookie';
 
 export function getToken() {
-    return Cookies.get('staffToken') 
+    return Cookies.get('token') 
 }
-export function removeStaffUserId() {
-    return Cookies.remove('staffUserId')
+export function removeUserId() {
+    return Cookies.remove('userId')
 }
-export function removeStaffId() {
+export function removeId() {
     return Cookies.remove('staffId')
 }
-export function removeStaffNickname() {
-    return Cookies.remove('staffNickname')
+export function removeNickname() {
+    return Cookies.remove('nickname')
 }
 export function removeToken() {
-    return Cookies.remove('staffToken')
+    return Cookies.remove('token')
 }
 export function setToken(token) {
-    return Cookies.set('staffToken', token)
+    return Cookies.set('token', token)
 }
 export function getStaffId() {
     return Cookies.get('staffId')
 }
-export function getStaffUserId() {
-    return Cookies.get('staffUserId')
+export function getUserId() {
+    return Cookies.get('userId')
 }
-export function getStaffNickname() {
-    return Cookies.get('staffNickname')
+export function getNickname() {
+    return Cookies.get('nickname')
 }

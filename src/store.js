@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { login, getInfo } from '@/services/user'
-import { setToken, removeToken } from '@/utils/auth'
+// import { getInfo } from '@/services/user'
+import { 
+    removeToken, 
+} from '@/utils/auth'
 import router from './router'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        roles: [],
+        roles: ['item-one:view', 'item-two:view', 'item-three:view', 'item-four:view', 'item-five:view'],
         name: '',
         routes: router,
         uploadImages: {}
@@ -34,16 +36,7 @@ const store = new Vuex.Store({
     actions: {
         getInfo({ commit, state }) {
             return new Promise((resolve, reject) => {
-                getInfo(state.token).then(response => {
-                    // const { data } = response.data
-                    if(!response.data) {
-                        reject(`Verification failed, please Login again.`)
-                    }
-                    const { permissionCodeList, userVo } = response.data.data
-                    commit('SET_NAME', userVo.username)
-                    commit('SET_ROLES', permissionCodeList)
-                    resolve(permissionCodeList)
-                })
+                // 
             })
         },
         resetToken({ commit }) {

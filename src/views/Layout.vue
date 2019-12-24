@@ -14,7 +14,7 @@
                     <div v-for="(route, index) in routesConfig" :key="route.path">
                         <el-submenu :index="`${index}`" class="nest-menu" v-if="route.isPower">
                             <template slot="title">
-                                <i class="el-icon-takeaway-box"></i>
+                                <i :class="route.icon"></i>
                                 <span v-if="!isCollapse" slot='title'>{{route.name}}</span>
                             </template>
                             <div v-if="route.children&&route.children.length > 0">
@@ -32,7 +32,7 @@
                 <i class="el-icon-s-fold" v-if="!isCollapse" v-on:click="fold"></i>
                 <i class="el-icon-s-unfold" v-on:click="fold" v-else></i>
                 <el-dropdown class="user">
-                    <div>{{ userName }}</div>
+                    <div>admin</div>
                     <el-dropdown-menu>
                         <el-dropdown-item>
                             <span v-on:click="signOut">sign out</span>
@@ -53,11 +53,7 @@
 import { mapGetters } from 'vuex'
 import path from 'path'
 import { judgePower } from '../utils/utils'
-import { getStaffNickname } from '../utils/auth'
 import { 
-    removeStaffUserId, 
-    removeStaffId, 
-    removeStaffNickname, 
     removeToken
 } from '../utils/auth'
 export default {
@@ -67,7 +63,6 @@ export default {
             isCollapse: false,
             activeMenu: "0-0",
             route: this.$route,
-            userName: getStaffNickname()
         }
     },
     created() {        
@@ -76,14 +71,14 @@ export default {
             if(this.routesConfig[i].children) {
                 this.routesConfig[i].isPower = false;
                 for(let j = 0; j < this.routesConfig[i].children.length; j++) {
-                    // 下面设置 this.activeMenu 属性
+                //     // 下面设置 this.activeMenu 属性
                     if(this.route.path.indexOf(this.routesConfig[i].children[j].meta.menuPath) !== -1 ||
                     this.routesConfig[i].children[j].meta.menuPath.indexOf(this.route.path) !== -1) {
                         this.activeMenu = `${i}-${j}`
                     }
-                    // 下面设置 this.routesConfig[i].isPower
+                //     // 下面设置 this.routesConfig[i].isPower
                     if(this.roles.includes(this.routesConfig[i].children[j].meta.powerCode)
-                     || this.routesConfig[i].children[j].meta.menuPath === '/dashboard/userRelation') {
+                     || this.routesConfig[i].children[j].meta.menuPath === '/dashboard/login') {
                         this.routesConfig[i].isPower = true;
                     }
                 }
@@ -109,12 +104,8 @@ export default {
             else return false
         },
         signOut() {
-            console.log('signOut')
-            removeStaffUserId();
-            removeStaffId();
-            removeStaffNickname();
             removeToken();
-            this.$router.push('/fe-user-growth/login')
+            this.$router.push('/dashboard/login')
         }
     }
 }

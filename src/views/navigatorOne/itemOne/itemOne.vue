@@ -1,14 +1,12 @@
 <template>
     <div class="title">
-        /invite/poster
+       /navigatorOne/itemThree
     </div>
 </template>
 
 
 <script>
-
 export default {
-    name: 'InviteTextList'
 }
 </script>
 

@@ -82,7 +82,7 @@
   </div>
 </template>
 <script>
-  import { login, savePassword } from '@/services/user';
+  // import { login, savePassword } from '@/services/user';
   import Cookie from 'js-cookie';
 
   export default {
@@ -113,24 +113,8 @@
           this.passwordWarning = false;
         }
         if (this.username !== '' && this.password !== '') {
-          login({
-            type: 'post',
-            params: { username: this.username, password: this.password },
-          }).then((res) => {
-            if (res.data&&res.data.errCode === 0) {
-              const { data } = res.data;
-              Cookie.set('staffToken', data.token);
-              Cookie.set('staffUserId', data.user.id);
-              Cookie.set('staffId', data.user.uuid);
-              Cookie.set('staffNickname', data.user.username);
+              Cookie.set('token', '12345678');
               window.location.href = window.location.origin + '/fe-user-growth/dashboard/userRelation'
-            } else if (res.data&&res.data.errCode === 10110002) {
-              Cookie.remove('staffToken')
-              this.$router.push({ path: '/login' });
-            } else {
-              this.$message({ message: '对不起，你和用户名和密码输入错误，请重新输入', duration: 3000 });
-            }
-          })
         }
       }, 
       modifyPassword() {
@@ -160,24 +144,24 @@
           && this.password !== ''
           && this.newPassword !== ''
           ) {
-          savePassword({
-            type: 'PUT',
-            params: {
-              username: this.usernameM,
-              password: this.password,
-              newPassword: this.newPassword
-            }
-          }).then((res) => {
-            if (res.data&&res.data.errCode === 0) {
-              this.$message({ message: '修改密码成功', duration: 3000 });
+          // savePassword({
+          //   type: 'PUT',
+          //   params: {
+          //     username: this.usernameM,
+          //     password: this.password,
+          //     newPassword: this.newPassword
+          //   }
+          // }).then((res) => {
+          //   if (res.data&&res.data.errCode === 0) {
+          //     this.$message({ message: '修改密码成功', duration: 3000 });
               this.login = true;
               this.password = '';
-            } else if (res.data&&res.data.errCode === 10110002) {
-              this.$router.push({path: '/login' })
-            } else {
-              this.$message({ message: '修改密码失败，请重试', duration: 3000 });
-            }
-          })
+            // } else if (res.data&&res.data.errCode === 10110002) {
+            //   this.$router.push({path: '/login' })
+            // } else {
+            //   this.$message({ message: '修改密码失败，请重试', duration: 3000 });
+            // }
+          // })
         }
       },
       backLogin() {
@@ -202,7 +186,7 @@ input {
   caret-color: #fff;
   padding: 4px 0;
   padding-left: 30px;
-  width: 100%;
+  width: 92%;
   text-decoration: none;
   background-color: rgba(0,0,0,.1);
   border: 1px solid hsla(0,0%,100%,.1);

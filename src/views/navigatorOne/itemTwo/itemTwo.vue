@@ -1,13 +1,13 @@
 <template>
     <div class="title">
-        拼团管理页
+        /navigatorOne/itemTwo
     </div>
 </template>
 
 
 <script>
+
 export default {
-    name: 'CardGroup'
 }
 </script>
 

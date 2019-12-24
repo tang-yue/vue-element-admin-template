@@ -1,6 +1,6 @@
 <template>
     <div class="title">
-        /create/invite/cashbackorders
+       /navigatorTwo/itemThree
     </div>
 </template>
 
@@ -8,7 +8,6 @@
 <script>
 
 export default {
-    name: 'InviteCashbackOrders'
 }
 </script>
 

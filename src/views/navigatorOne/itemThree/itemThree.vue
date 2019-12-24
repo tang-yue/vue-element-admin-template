@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        打卡分享页
+        /navigatorOne/itemOne
     </div>
 </template>
 
@@ -10,7 +10,6 @@ import { mapGetters } from 'vuex';
 
 
 export default {
-    name: 'PunchCard',
     components: {
 
     },

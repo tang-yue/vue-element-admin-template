@@ -1,6 +1,6 @@
 <template>
     <div class="title">
-        /card/giftBanner
+       /navigatorTwo/itemFour
     </div>
 </template>
 
@@ -8,7 +8,6 @@
 <script>
 
 export default {
-    name: 'GiftBanner'
 }
 </script>
 
