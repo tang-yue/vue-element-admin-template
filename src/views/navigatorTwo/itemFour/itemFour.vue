@@ -1,6 +1,6 @@
 <template>
     <div class="title">
-        /navigatorTwo/itemFive
+        /navigatorTwo/itemFour
     </div>
 </template>
 
@@ -8,6 +8,10 @@
 <script>
 
 export default {
+    name: 'itemFour',
+    data() {
+        return {}
+    },
 }
 </script>
 

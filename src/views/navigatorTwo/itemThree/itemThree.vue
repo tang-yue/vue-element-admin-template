@@ -1,6 +1,6 @@
 <template>
     <div class="title">
-       /navigatorTwo/itemFour
+       /navigatorTwo/itemThree
     </div>
 </template>
 
