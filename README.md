@@ -1,3 +1,3 @@
 ### vue-element-admin-template
 
-#### 权限管理
+#### 包含权限管理
