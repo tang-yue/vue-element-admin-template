@@ -8,8 +8,8 @@ import '@/styles/base.less'
 import '@/styles/element-ui.less'
 import '@/styles/iconfont.less'
 import '@/styles/index.less' // global css
-
 import './permission'
+import './icons/index'
 
 Vue.use(ElementUI);
 

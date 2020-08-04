@@ -3,14 +3,15 @@
     <template v-if="hasOneShowingChild(route.children,route) && (!onlyOneChild.children)">
       <router-link v-if="onlyOneChild" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item v-if="onlyOneChild.meta" :index="resolvePath(onlyOneChild.path)">
-          <i :class="`iconfont ${onlyOneChild.meta.icon || (route.meta.icon)} mr10`"></i>
+           <svg-icon :iconName="(onlyOneChild.meta.icon || (route.meta&&route.meta.icon))"></svg-icon>
           <span slot='title'>{{onlyOneChild.meta.title}}</span>
         </el-menu-item>
       </router-link>
     </template>
     <el-submenu v-else :index="resolvePath(route.path)" popper-append-to-body>
       <template slot="title">
-        <i :class="`iconfont ${route.meta&&route.meta.icon} mr10`"></i>
+        <!-- <i :class="`iconfont ${route.meta&&route.meta.icon} mr10`"></i> -->
+        <svg-icon :iconName="route.meta.icon"></svg-icon>
         <span slot='title' v-if="!isCollapse">{{route.meta.title}}</span>
       </template>
         <sidebar-item

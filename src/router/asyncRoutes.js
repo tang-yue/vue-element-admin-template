@@ -23,7 +23,7 @@ export const asyncRoutes = [
         component: Layout,
         redirect: '/navigatorOne/itemOne',
         meta: {
-            icon: 'icon-dashboard',
+            icon: 'icon-suger',
             title: 'navigatorOne'
         },
         children: [
@@ -62,7 +62,7 @@ export const asyncRoutes = [
         component: Layout,
         redirect: '/navigatorTwo/itemOne',
         meta: {
-            icon: 'icon-58',
+            icon: 'icon-yueliang',
             title: 'navigatorTwo'
         },
         // hidden: true,
